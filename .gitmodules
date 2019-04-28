@@ -1,0 +1,3 @@
+[submodule "al_bp"]
+	path = al_bp
+	url = https://github.com/andre-bisa/Abstraction-Layer-Bundle-Protocol.git
