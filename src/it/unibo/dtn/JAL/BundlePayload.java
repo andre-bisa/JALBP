@@ -5,8 +5,9 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-/** Bundle Payload
- * Creation date: 10/04/2019
+/** 
+ * Bundle Payload
+ * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *

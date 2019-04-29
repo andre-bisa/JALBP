@@ -2,8 +2,9 @@ package it.unibo.dtn.JAL;
 
 import java.net.URI;
 
-/** Endpoint of IPN schema
- * Creation date: 10/04/2019
+/** 
+ * Endpoint of IPN scheme
+ * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *

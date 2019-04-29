@@ -2,8 +2,9 @@ package it.unibo.dtn.JAL;
 
 import java.net.URI;
 
-/** Endpoint of DTN schema
- * Creation date: 10/04/2019
+/** 
+ * Endpoint of DTN scheme
+ * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *

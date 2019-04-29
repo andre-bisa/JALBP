@@ -1,7 +1,8 @@
 package it.unibo.dtn.JAL;
 
-/** EID Schema
- * Creation date: 10/04/2019
+/** 
+ * EID Schema
+ * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *

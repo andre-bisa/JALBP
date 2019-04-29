@@ -3,8 +3,9 @@ package it.unibo.dtn.JAL;
 import java.util.LinkedList;
 import java.util.List;
 
-/** Status Report
- * Creation date: 10/04/2019
+/** 
+ * Status Report
+ * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *

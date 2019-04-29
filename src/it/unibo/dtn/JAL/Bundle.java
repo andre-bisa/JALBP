@@ -5,8 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-/** DTN Bundle rappresentation
- * Creation date: 10/04/2019
+/** 
+ * DTN Bundle rappresentation
+ * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *

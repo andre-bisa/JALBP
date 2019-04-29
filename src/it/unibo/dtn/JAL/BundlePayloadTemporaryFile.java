@@ -1,7 +1,8 @@
 package it.unibo.dtn.JAL;
 
-/** Payload saved in Temporary File
- * Creation date: 10/04/2019
+/** 
+ * Payload saved in Temporary File
+ * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *

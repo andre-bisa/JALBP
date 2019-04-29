@@ -18,8 +18,9 @@ import it.unibo.dtn.JAL.exceptions.JALSendException;
 import it.unibo.dtn.JAL.exceptions.JALTimeoutException;
 import it.unibo.dtn.JAL.exceptions.JALUnregisterException;
 
-/** Exception Manager. Very usefull to have a generic resolution of ALBPExceptions.
- * Creation date: 10/04/2019
+/** 
+ * Exception Manager. Very usefull to have a generic resolution of ALBPExceptions.
+ * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *

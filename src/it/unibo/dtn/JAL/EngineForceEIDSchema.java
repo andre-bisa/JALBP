@@ -1,7 +1,8 @@
 package it.unibo.dtn.JAL;
 
-/** Force EID Schema
- * Creation date: 10/04/2019
+/** 
+ * Force EID Schema
+ * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *

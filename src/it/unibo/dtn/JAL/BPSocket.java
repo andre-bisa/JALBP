@@ -7,7 +7,7 @@ import it.unibo.dtn.JAL.exceptions.JALException;
 import it.unibo.dtn.JAL.exceptions.JALTimeoutException;
 
 /** 
- * ALBPSocket. It let to send and receive {@link Bundle}s<br>
+ * Socket. It let to send and receive {@link Bundle}s<br>
  * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0

@@ -2,8 +2,9 @@ package it.unibo.dtn.JAL;
 
 import java.net.URI;
 
-/** DTN Endpoint
- * Creation date: 10/04/2019
+/** 
+ * BundleEndpointID
+ * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *

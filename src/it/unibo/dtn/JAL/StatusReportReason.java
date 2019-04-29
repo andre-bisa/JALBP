@@ -1,7 +1,8 @@
 package it.unibo.dtn.JAL;
 
-/** Status Report Reason
- * Creation date: 10/04/2019
+/** 
+ * Status Report Reason
+ * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *

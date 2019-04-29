@@ -2,8 +2,9 @@ package it.unibo.dtn.JAL;
 
 import java.util.Arrays;
 
-/** Extension Block
- * Creation date: 10/04/2019
+/** 
+ * Extension Block
+ * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *

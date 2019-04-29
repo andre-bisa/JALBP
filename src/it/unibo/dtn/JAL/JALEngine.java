@@ -3,8 +3,9 @@ package it.unibo.dtn.JAL;
 import it.unibo.dtn.JAL.exceptions.JALException;
 import it.unibo.dtn.JAL.exceptions.JALInitException;
 
-/** ALBPEngine
- * Creation date: 10/04/2019
+/** 
+ * ALBPEngine
+ * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *
