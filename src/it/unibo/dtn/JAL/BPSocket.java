@@ -6,8 +6,9 @@ import java.io.IOException;
 import it.unibo.dtn.JAL.exceptions.JALException;
 import it.unibo.dtn.JAL.exceptions.JALTimeoutException;
 
-/** ALBPSocket. It let to send and receive {@link Bundle}s<br>
- * Creation date: 10/04/2019
+/** 
+ * ALBPSocket. It let to send and receive {@link Bundle}s<br>
+ * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *
@@ -106,7 +107,7 @@ public class BPSocket implements Closeable {
 	}
 	
 	/**
-	 * The same as {@link #setTimeout(int)} followed by receive
+	 * The receive with a specific timeout
 	 * @param timeout In seconds
 	 * @return The Bundle received
 	 * @throws JALException According to ALBPException.
@@ -114,12 +115,11 @@ public class BPSocket implements Closeable {
 	 * @see ExceptionManager
 	 */
 	public Bundle receive(int timeout) throws JALException {
-		this.setTimeout(timeout);
-		return this.receive();
+		return this.receive(null, timeout);
 	}
 	
 	/**
-	 * The same as {@link #setPayloadLocation(BundlePayloadLocation)} followed by receive
+	 * The receive with a specific payload location
 	 * @param location Payload location
 	 * @return The bundle received
 	 * @throws JALException According to ALBPException.
@@ -127,12 +127,11 @@ public class BPSocket implements Closeable {
 	 * @see ExceptionManager
 	 */
 	public Bundle receive(BundlePayloadLocation location) throws JALException {
-		this.setPayloadLocation(location);
-		return this.receive();
+		return this.receive(location, null);
 	}
 	
 	/**
-	 * The same as {@link #setTimeout(int)} and {@link #setPayloadLocation(BundlePayloadLocation)} followed by receive
+	 * The receive with a specific payload location and timeout
 	 * @param location Payload location
 	 * @param timeout In seconds
 	 * @return The bundle received
@@ -140,10 +139,17 @@ public class BPSocket implements Closeable {
 	 * @see JALException
 	 * @see ExceptionManager
 	 */
-	public Bundle receive(BundlePayloadLocation location, int timeout) throws JALException {
-		this.setPayloadLocation(location);
-		this.setTimeout(timeout);
-		return this.receive();
+	public Bundle receive(BundlePayloadLocation location, Integer timeout) throws JALException {
+		int oldTimeout = this.timeout;
+		BundlePayloadLocation oldLocation = this.payloadLocation;
+		if (location != null)
+			this.setPayloadLocation(location);
+		if (timeout != null)
+			this.setTimeout(timeout);
+		Bundle result = this.receive();
+		this.setPayloadLocation(oldLocation);
+		this.setTimeout(oldTimeout);
+		return result;
 	}
 	
 	/**

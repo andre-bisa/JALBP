@@ -1,5 +1,6 @@
 package it.unibo.dtn.JAL;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -14,15 +15,15 @@ public class Bundle {
 
 	// *** BUNDLE ID
 	private BundleEID source = null;
-	private BundleTimestamp creationTimestamp = new BundleTimestamp(0, 0);
+	private BundleTimestamp creationTimestamp = null;
 	private int fragmentOffset = 0;
 	private int origLength = 0;
 	
 	// *** BUNDLE SPEC
 	private Optional<BundleEID> destination = Optional.empty();
-	private BundleEID replyTo = null;
-	private BundlePriority priority = new BundlePriority(0);
-	private BundleDeliveryOptions deliveryOption = BundleDeliveryOptions.None;
+	private Optional<BundleEID> replyTo = Optional.empty();
+	private BundlePriority priority = null;
+	private List<BundleDeliveryOption> deliveryOptions = new LinkedList<>();
 	private int expiration = 0;
 	private int deliveryRegID = 0;
 	private final List<BundleExtensionBlock> blocks = new LinkedList<>();
@@ -37,10 +38,21 @@ public class Bundle {
 	private BundlePayload payload = null;
 	
 	/**
-	 * Creats an empty bundle
+	 * Creates an empty bundle
 	 */
-	public Bundle() {}
+	public Bundle() {
+		this.deliveryOptions.add(BundleDeliveryOption.None);
+		this.creationTimestamp = new BundleTimestamp(0, 0);
+		this.priority = new BundlePriority(0);
+	}
 
+	public byte[] getData() {
+		if (this.payload == null)
+			return null;
+		else
+			return this.payload.getData();
+	}
+	
 	public BundleEID getSource() {
 		return source;
 	}
@@ -57,14 +69,11 @@ public class Bundle {
 		return origLength;
 	}
 
-	public BundleEID getDestination() {
-		if (destination.isPresent())
-			return destination.get();
-		else
-			return null;
+	public Optional<BundleEID> getDestination() {
+		return destination;
 	}
 
-	public BundleEID getReplyTo() {
+	public Optional<BundleEID> getReplyTo() {
 		return replyTo;
 	}
 
@@ -72,8 +81,8 @@ public class Bundle {
 		return priority;
 	}
 
-	public BundleDeliveryOptions getDeliveryOption() {
-		return deliveryOption;
+	public List<BundleDeliveryOption> getDeliveryOptions() {
+		return new LinkedList<>(this.deliveryOptions);
 	}
 
 	public int getExpiration() {
@@ -129,15 +138,15 @@ public class Bundle {
 	}
 
 	public void setReplyTo(BundleEID replyTo) {
-		this.replyTo = replyTo;
+		this.replyTo = Optional.of(replyTo);
 	}
 
 	public void setPriority(BundlePriority priority) {
 		this.priority = priority;
 	}
 
-	public void setDeliveryOption(BundleDeliveryOptions deliveryOption) {
-		this.deliveryOption = deliveryOption;
+	public void setDeliveryOptions(Collection<BundleDeliveryOption> deliveryOptions) {
+		this.deliveryOptions = new LinkedList<>(deliveryOptions);
 	}
 
 	public void setExpiration(int expiration) {
@@ -237,7 +246,7 @@ public class Bundle {
 	
 	@SuppressWarnings("unused")
 	private void setDeliveryOption(int value) {
-		this.setDeliveryOption(BundleDeliveryOptions.of(value));
+		this.setDeliveryOptions(BundleDeliveryOption.of(value));
 	}
 	
 	@SuppressWarnings("unused")
@@ -379,16 +388,20 @@ public class Bundle {
 	
 	@SuppressWarnings("unused")
 	private String getDestinationAsString() {
-		BundleEID EID = this.getDestination();
-		if (EID == null)
-			return "";
+		Optional<BundleEID> EID = this.getDestination();
+		if (EID.isPresent())
+			return EID.get().toString();
 		else
-			return EID.toString();
+			return "";
 	}
 	
 	@SuppressWarnings("unused")
 	private String getReplyToAsString() {
-		return this.replyTo.toString();
+		Optional<BundleEID> EID = this.getReplyTo();
+		if (EID.isPresent())
+			return EID.get().toString();
+		else
+			return "";
 	}
 	
 	@SuppressWarnings("unused")
@@ -403,7 +416,11 @@ public class Bundle {
 	
 	@SuppressWarnings("unused")
 	private int getDeliveryOptionsVal() {
-		return this.deliveryOption.getValue();
+		int result = 0;
+		for (BundleDeliveryOption currentDeliveryOption : this.deliveryOptions) {
+			result += currentDeliveryOption.getValue();
+		}
+		return result;
 	}
 	
 	@SuppressWarnings("unused")
