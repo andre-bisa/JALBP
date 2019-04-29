@@ -323,7 +323,7 @@ public class Bundle {
 	@SuppressWarnings("unused")
 	private void setFlagStatusReport(int val) {
 		createStatusReport();
-		this.statusReport.setFlag(StatusReportFlag.of(val));
+		this.statusReport.setFlags(StatusReportFlag.of(val));
 	}
 	
 	@SuppressWarnings("unused")

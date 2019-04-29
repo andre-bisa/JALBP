@@ -6,16 +6,23 @@ import it.unibo.dtn.JAL.BPSocket;
 import it.unibo.dtn.JAL.Bundle;
 import it.unibo.dtn.JAL.BundleEID;
 import it.unibo.dtn.JAL.exceptions.JALException;
+import it.unibo.dtn.JAL.exceptions.JALReceptionInterrupted;
 
 class Main {
 
 	public static void main(String[] args) throws JALException, IOException {
 		BPSocket socket = BPSocket.register(10);
 		
-		Bundle bundle = socket.receive();
-		bundle.setDestination(BundleEID.of("ipn:5.1"));
-		bundle.setExpiration(60);
-		socket.send(bundle);
+		boolean stop = false;
+		Bundle bundle = null;
+		while (!stop) {
+			try {
+				bundle = socket.receive();
+			} catch (JALReceptionInterrupted e) {continue;}
+			bundle.setDestination(BundleEID.of("ipn:5.1"));
+			bundle.setExpiration(60);
+			socket.send(bundle);
+		}
 		
 		socket.close();
 	}

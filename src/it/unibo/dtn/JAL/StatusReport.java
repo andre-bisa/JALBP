@@ -1,5 +1,8 @@
 package it.unibo.dtn.JAL;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /** Status Report
  * Creation date: 10/04/2019
  * @author Andrea Bisacchi
@@ -15,7 +18,7 @@ public class StatusReport {
 	private int origLength = 0;
 	
 	private StatusReportReason reason;
-	private StatusReportFlag flag; // TODO lista
+	private List<StatusReportFlag> flags = new LinkedList<>();
 	private BundleTimestamp receiptTimestamp;
 	private BundleTimestamp custodyTimestamp;
 	private BundleTimestamp forwardingTimestamp;
@@ -37,7 +40,7 @@ public class StatusReport {
 		result = prime * result + ((custodyTimestamp == null) ? 0 : custodyTimestamp.hashCode());
 		result = prime * result + ((deletionTimestamp == null) ? 0 : deletionTimestamp.hashCode());
 		result = prime * result + ((deliveryTimestamp == null) ? 0 : deliveryTimestamp.hashCode());
-		result = prime * result + ((flag == null) ? 0 : flag.hashCode());
+		result = prime * result + ((flags == null) ? 0 : flags.hashCode());
 		result = prime * result + ((forwardingTimestamp == null) ? 0 : forwardingTimestamp.hashCode());
 		result = prime * result + fragmentOffset;
 		result = prime * result + origLength;
@@ -101,7 +104,7 @@ public class StatusReport {
 		} else if (!deliveryTimestamp.equals(other.deliveryTimestamp)) {
 			return false;
 		}
-		if (flag != other.flag) {
+		if (flags != other.flags) {
 			return false;
 		}
 		if (forwardingTimestamp == null) {
@@ -185,12 +188,12 @@ public class StatusReport {
 		this.reason = reason;
 	}
 
-	public StatusReportFlag getFlag() {
-		return flag;
+	public List<StatusReportFlag> getFlags() {
+		return new LinkedList<>(this.flags);
 	}
 
-	public void setFlag(StatusReportFlag flag) {
-		this.flag = flag;
+	public void setFlags(List<StatusReportFlag> flags) {
+		this.flags = new LinkedList<>(flags);
 	}
 
 	public BundleTimestamp getReceiptTimestamp() {
