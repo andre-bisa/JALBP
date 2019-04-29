@@ -6,7 +6,7 @@ import it.unibo.dtn.JAL.BPSocket;
 import it.unibo.dtn.JAL.Bundle;
 import it.unibo.dtn.JAL.BundleEID;
 import it.unibo.dtn.JAL.exceptions.JALException;
-import it.unibo.dtn.JAL.exceptions.JALReceptionInterrupted;
+import it.unibo.dtn.JAL.exceptions.JALReceptionInterruptedException;
 
 class Main {
 
@@ -18,7 +18,7 @@ class Main {
 		while (!stop) {
 			try {
 				bundle = socket.receive();
-			} catch (JALReceptionInterrupted e) {continue;}
+			} catch (JALReceptionInterruptedException e) {continue;}
 			bundle.setDestination(BundleEID.of("ipn:5.1"));
 			bundle.setExpiration(60);
 			socket.send(bundle);

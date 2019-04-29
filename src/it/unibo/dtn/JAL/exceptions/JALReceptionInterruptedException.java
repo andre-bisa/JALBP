@@ -7,26 +7,26 @@ import it.unibo.dtn.JAL.exceptions.JALException;
  * @author Andrea Bisacchi
  *
  */
-public class JALReceptionInterrupted extends JALException {
+public class JALReceptionInterruptedException extends JALException {
 
 	private static final long serialVersionUID = -3447143910599245491L;
 
-	public JALReceptionInterrupted() {
+	public JALReceptionInterruptedException() {
 	}
 
-	public JALReceptionInterrupted(String message) {
+	public JALReceptionInterruptedException(String message) {
 		super(message);
 	}
 
-	public JALReceptionInterrupted(Throwable cause) {
+	public JALReceptionInterruptedException(Throwable cause) {
 		super(cause);
 	}
 
-	public JALReceptionInterrupted(String message, Throwable cause) {
+	public JALReceptionInterruptedException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public JALReceptionInterrupted(String message, Throwable cause, boolean enableSuppression,
+	public JALReceptionInterruptedException(String message, Throwable cause, boolean enableSuppression,
 			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}

@@ -12,7 +12,7 @@ import it.unibo.dtn.JAL.exceptions.JALNullPointerException;
 import it.unibo.dtn.JAL.exceptions.JALOpenException;
 import it.unibo.dtn.JAL.exceptions.JALReceiveException;
 import it.unibo.dtn.JAL.exceptions.JALReceiverException;
-import it.unibo.dtn.JAL.exceptions.JALReceptionInterrupted;
+import it.unibo.dtn.JAL.exceptions.JALReceptionInterruptedException;
 import it.unibo.dtn.JAL.exceptions.JALRegisterException;
 import it.unibo.dtn.JAL.exceptions.JALSendException;
 import it.unibo.dtn.JAL.exceptions.JALTimeoutException;
@@ -59,7 +59,7 @@ class ExceptionManager {
 		
 		case 10: throw new JALReceiveException(errorString + " General error on receiving bundle.");
 		
-		case 11: throw new JALReceptionInterrupted(errorString + " Error, the reception was interrupted.");
+		case 11: throw new JALReceptionInterruptedException(errorString + " Error, the reception was interrupted.");
 
 		case 12: throw new JALTimeoutException(errorString + " Error, timeout on receiving bundle.");
 		
