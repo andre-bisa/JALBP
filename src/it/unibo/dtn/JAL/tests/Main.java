@@ -6,6 +6,8 @@ import it.unibo.dtn.JAL.BPSocket;
 import it.unibo.dtn.JAL.Bundle;
 import it.unibo.dtn.JAL.BundleEID;
 import it.unibo.dtn.JAL.BundlePayloadLocation;
+import it.unibo.dtn.JAL.EngineForceEIDSchema;
+import it.unibo.dtn.JAL.JALEngine;
 import it.unibo.dtn.JAL.exceptions.JALException;
 import it.unibo.dtn.JAL.exceptions.JALReceptionInterruptedException;
 
@@ -20,12 +22,13 @@ class Main {
 			try {
 				bundle = socket.receive();
 			} catch (JALReceptionInterruptedException e) {continue;}
-			bundle.setDestination(BundleEID.of("ipn:5.1"));
+			bundle.setDestination(bundle.getSource());
 			bundle.setExpiration(60);
 			socket.send(bundle);
 		}
 		
 		socket.close();
+		JALEngine.getInstance().destroy();
 	}
 
 }

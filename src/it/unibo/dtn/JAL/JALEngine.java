@@ -107,7 +107,7 @@ public class JALEngine {
 	 * Loads the al_bp library.
 	 * @throws Throwable In case the library is not installed in the system
 	 */
-	public static void loadLibrary() {
+	private static void loadLibrary() {
 		try {
 			System.loadLibrary("al_bp");
 		} catch (Throwable e) {
