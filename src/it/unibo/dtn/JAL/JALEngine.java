@@ -96,11 +96,24 @@ public class JALEngine {
 	 */
 	public static JALEngine getInstance() throws JALException {
 		if (JALEngine.instance == null) {
-			LibraryLoader.loadLibrary();
+			JALEngine.loadLibrary();
 			JALEngine.instance = new JALEngine();
 			JALEngine.instance.init();
 		}
 		return JALEngine.instance;
+	}
+	
+	/**
+	 * Loads the al_bp library.
+	 * @throws Throwable In case the library is not installed in the system
+	 */
+	public static void loadLibrary() {
+		try {
+			System.loadLibrary("al_bp");
+		} catch (Throwable e) {
+			System.err.println("Error, library al_bp not found in: " + System.getProperty("java.library.path"));
+			throw e;
+		}
 	}
 	
 	private static native int c_init(char force_eid, int IPNNodeForDTN2);

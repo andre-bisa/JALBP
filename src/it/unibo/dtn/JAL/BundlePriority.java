@@ -7,8 +7,25 @@ package it.unibo.dtn.JAL;
  *
  */
 public class BundlePriority {
-	private BundlePriorityCardinal priority;
+	private int priority;
 	private int ordinal;
+	
+	/**
+	 * 
+	 * @param priority
+	 */
+	public BundlePriority(BundlePriorityCardinal priority) {
+		this(priority.getValue());
+	}
+	
+	/**
+	 * 
+	 * @param priority
+	 * @param ordinal
+	 */
+	public BundlePriority(BundlePriorityCardinal priority, int ordinal) {
+		this(priority.getValue(), ordinal);
+	}
 	
 	/**
 	 * 
@@ -26,8 +43,8 @@ public class BundlePriority {
 	 * @throws IllegalArgumentException If ordinal is set with priority not Expedited or priority is Reserved
 	 */
 	public BundlePriority(int priority, int ordinal) {
-		this.priority = BundlePriorityCardinal.of(priority);
-		if (!this.priority.equals(BundlePriorityCardinal.Expedited) && this.ordinal != 0)
+		this.priority = priority;
+		if (priority != BundlePriorityCardinal.Expedited.getValue() && this.ordinal != 0)
 			throw new IllegalArgumentException("Can't set ordinal unless cardinal priority is " + BundlePriorityCardinal.Expedited.toString());
 		if (priority == BundlePriorityCardinal.Reserved.getValue())
 			throw new IllegalArgumentException("Can't use " + BundlePriorityCardinal.Reserved.toString() + " as a priority.");
@@ -39,7 +56,7 @@ public class BundlePriority {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ordinal;
-		result = prime * result + ((priority == null) ? 0 : priority.hashCode());
+		result = prime * result + priority;
 		return result;
 	}
 
@@ -64,12 +81,20 @@ public class BundlePriority {
 		return true;
 	}
 
-	public BundlePriorityCardinal getPriority() {
+	public int getPriority() {
 		return priority;
 	}
+	
+	public BundlePriorityCardinal getPriorityAsEnum() {
+		return BundlePriorityCardinal.of(this.priority);
+	}
 
-	public void setPriority(BundlePriorityCardinal priority) {
+	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+	
+	public void setPriority(BundlePriorityCardinal proprity) {
+		this.setPriority(proprity.getValue());
 	}
 
 	public int getOrdinal() {

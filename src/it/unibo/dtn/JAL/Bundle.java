@@ -393,7 +393,7 @@ public class Bundle {
 	
 	@SuppressWarnings("unused")
 	private int getPriorityVal() {
-		return this.priority.getPriority().getValue();
+		return this.priority.getPriority();
 	}
 	
 	@SuppressWarnings("unused")
