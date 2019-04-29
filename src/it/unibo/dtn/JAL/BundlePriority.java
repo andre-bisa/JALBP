@@ -12,18 +12,20 @@ public class BundlePriority {
 	
 	/**
 	 * 
-	 * @param priority
+	 * @param priority Priority
+	 * @throws IllegalArgumentException If ordinal is set with priority not Expedited or priority is Reserved
 	 */
-	public BundlePriority(BundlePriorityCardinal priority) {
+	public BundlePriority(BundlePriorityCardinal priority) throws IllegalArgumentException {
 		this(priority.getValue());
 	}
 	
 	/**
 	 * 
-	 * @param priority
-	 * @param ordinal
+	 * @param priority Priority
+	 * @param ordinal Ordinal
+	 * @throws IllegalArgumentException If ordinal is set with priority not Expedited or priority is Reserved
 	 */
-	public BundlePriority(BundlePriorityCardinal priority, int ordinal) {
+	public BundlePriority(BundlePriorityCardinal priority, int ordinal) throws IllegalArgumentException {
 		this(priority.getValue(), ordinal);
 	}
 	
@@ -32,7 +34,7 @@ public class BundlePriority {
 	 * @throws IllegalArgumentException If ordinal is set with priority not Expedited or priority is Reserved
 	 * @param priority priority
 	 */
-	public BundlePriority(int priority) {
+	public BundlePriority(int priority) throws IllegalArgumentException {
 		this(priority, 0);
 	}
 	
@@ -42,7 +44,7 @@ public class BundlePriority {
 	 * @param ordinal ordinal
 	 * @throws IllegalArgumentException If ordinal is set with priority not Expedited or priority is Reserved
 	 */
-	public BundlePriority(int priority, int ordinal) {
+	public BundlePriority(int priority, int ordinal) throws IllegalArgumentException {
 		this.priority = priority;
 		if (priority != BundlePriorityCardinal.Expedited.getValue() && this.ordinal != 0)
 			throw new IllegalArgumentException("Can't set ordinal unless cardinal priority is " + BundlePriorityCardinal.Expedited.toString());
