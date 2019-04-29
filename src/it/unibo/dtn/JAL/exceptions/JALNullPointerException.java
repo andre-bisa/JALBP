@@ -1,0 +1,32 @@
+package it.unibo.dtn.JAL.exceptions;
+
+/** NullPointerException passed to C code
+ * Creation date: 10/04/2019
+ * @author Andrea Bisacchi
+ *
+ */
+public class JALNullPointerException extends JALException {
+
+	private static final long serialVersionUID = 2343869017726215223L;
+
+	public JALNullPointerException() {
+	}
+
+	public JALNullPointerException(String message) {
+		super(message);
+	}
+
+	public JALNullPointerException(Throwable cause) {
+		super(cause);
+	}
+
+	public JALNullPointerException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public JALNullPointerException(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
+	}
+
+}
