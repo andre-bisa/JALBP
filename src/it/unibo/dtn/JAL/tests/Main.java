@@ -5,6 +5,7 @@ import java.io.IOException;
 import it.unibo.dtn.JAL.BPSocket;
 import it.unibo.dtn.JAL.Bundle;
 import it.unibo.dtn.JAL.BundleEID;
+import it.unibo.dtn.JAL.BundlePayloadLocation;
 import it.unibo.dtn.JAL.exceptions.JALException;
 import it.unibo.dtn.JAL.exceptions.JALReceptionInterruptedException;
 
