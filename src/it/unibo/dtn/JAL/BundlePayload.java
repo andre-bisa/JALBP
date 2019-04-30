@@ -85,4 +85,16 @@ public abstract class BundlePayload {
 	public String toString() {
 		return "Payload type="+this.location + "\tdata=" + new String(this.getData());
 	}
+	
+	/**
+	 * Payload factory
+	 * @param data To be inserted the payload
+	 * @return The BundlePayload created
+	 * @throws IllegalArgumentException In case of null pointer passed
+	 */
+	public static BundlePayload of(byte[] data) throws IllegalArgumentException {
+		if (data == null)
+			throw new IllegalArgumentException("Data can't be null.");
+		return new BundlePayloadMemory(data);
+	}
 }

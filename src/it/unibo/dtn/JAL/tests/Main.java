@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import it.unibo.dtn.JAL.BPSocket;
 import it.unibo.dtn.JAL.Bundle;
+import it.unibo.dtn.JAL.BundleDeliveryOption;
 import it.unibo.dtn.JAL.BundleEID;
 import it.unibo.dtn.JAL.BundlePayload;
-import it.unibo.dtn.JAL.BundlePayloadMemory;
 import it.unibo.dtn.JAL.JALEngine;
 import it.unibo.dtn.JAL.exceptions.JALException;
 import it.unibo.dtn.JAL.exceptions.JALReceptionInterruptedException;
@@ -22,7 +22,10 @@ class Main {
 		while (!stop) {
 			try {
 				bundle = socket.receive();
-				System.out.print(new String(bundle.getData()));
+				if (bundle.getStatusReport() != null)
+					continue;
+				else
+					System.out.print(new String(bundle.getData()));
 			} catch (JALReceptionInterruptedException e) {continue;}
 			catch (JALTimeoutException e) {
 				System.out.println("Timeout");
@@ -31,8 +34,13 @@ class Main {
 			
 			Bundle b = new Bundle(bundle.getSource());
 			//b.setSource(BundleEID.of("ipn:5.10"));
-			BundlePayload payload = new BundlePayloadMemory("1234".getBytes());
+			BundlePayload payload = BundlePayload.of("1234".getBytes());
 			b.setPayload(payload);
+			b.setReplyTo(BundleEID.of("ipn:5.10"));
+			b.addDeliveryOption(BundleDeliveryOption.Custody);
+			b.addDeliveryOption(BundleDeliveryOption.CustodyReceipt);
+			b.addDeliveryOption(BundleDeliveryOption.DeliveryReceipt);
+			
 			//bundle.setExpiration(60);
 			//bundle.setDestination(bundle.getSource());
 			

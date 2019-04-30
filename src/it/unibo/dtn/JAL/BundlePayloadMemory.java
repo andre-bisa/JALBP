@@ -12,12 +12,12 @@ public final class BundlePayloadMemory extends BundlePayload {
 	private byte[] buffer;
 	
 	/**
-	 * 
-	 * @param buffer Payload data buffer
+	 * Creates a Bundle Payload with the data passed
+	 * @param data Payload data buffer
 	 */
-	public BundlePayloadMemory(byte[] buffer) {
+	public BundlePayloadMemory(byte[] data) {
 		super(BundlePayloadLocation.Memory);
-		this.buffer = buffer;
+		this.buffer = data.clone();
 	}
 
 	@Override

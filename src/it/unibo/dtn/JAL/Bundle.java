@@ -1,5 +1,8 @@
 package it.unibo.dtn.JAL;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -71,11 +74,60 @@ public class Bundle {
 		this.expiration = 60;
 	}
 
+	/**
+	 * Retunrs the status report
+	 * @return The status report
+	 */
+	public StatusReport getStatusReport() {
+		return this.statusReport;
+	}
+	
+	/**
+	 * 
+	 * @return The data inside the payload or null if there is no payload
+	 * @see BundlePayload See the method in BundlePayload
+	 */
 	public byte[] getData() {
 		if (this.payload == null)
 			return null;
 		else
 			return this.payload.getData();
+	}
+	
+	/**
+	 * 
+	 * @return The input stream of data inside the payload or null if there is no payload
+	 * @see BundlePayload See the method in BundlePayload
+	 */
+	public InputStream getInputStream() {
+		if (this.payload == null)
+			return null;
+		else
+			return this.payload.getInputStream();
+	}
+
+	/**
+	 * 
+	 * @return The buffered reader of data inside the payload or null if there is no payload
+	 * @see BundlePayload See the method in BundlePayload
+	 */
+	public BufferedReader getBufferedReader() {
+		if (this.payload == null)
+			return null;
+		else
+			return this.payload.getBufferedReader();
+	}
+
+	/**
+	 * 
+	 * @return The input stream reader of data inside the payload or null if there is no payload
+	 * @see BundlePayload See the method in BundlePayload
+	 */
+	public InputStreamReader getInputStreamReader() {
+		if (this.payload == null)
+			return null;
+		else
+			return this.payload.getInputStreamReader();
 	}
 	
 	public BundleEID getSource() {
@@ -176,6 +228,18 @@ public class Bundle {
 	public void setDeliveryOptions(Collection<BundleDeliveryOption> deliveryOptions) {
 		this.deliveryOptions = new LinkedList<>(deliveryOptions);
 	}
+	
+	public void addDeliveryOption(BundleDeliveryOption deliveryOption) {
+		this.deliveryOptions.add(deliveryOption);
+	}
+	
+	public boolean removeDeliveryOption(BundleDeliveryOption deliveryOption) {
+		return this.deliveryOptions.remove(deliveryOption);
+	}
+	
+	public void clearAllDeliveryOption() {
+		this.deliveryOptions.clear();
+	}
 
 	public void setExpiration(int expiration) {
 		this.expiration = expiration;
@@ -255,6 +319,11 @@ public class Bundle {
 		return true;
 	}
 	
+	private void createStatusReport() {
+		if (this.statusReport == null)
+			this.statusReport = new StatusReport(this);
+	}
+	
 	// ***** JNI UTILITY FUNCTIONS
 
 	@SuppressWarnings("unused")
@@ -320,11 +389,6 @@ public class Bundle {
 	@SuppressWarnings("unused")
 	private void addMetadata(byte[] metadata, int flags, int type) {
 		this.addMetadata(new BundleExtensionBlock(metadata, flags, type));
-	}
-	
-	private void createStatusReport() {
-		if (this.statusReport == null)
-			this.statusReport = new StatusReport(this);
 	}
 	
 	@SuppressWarnings("unused")

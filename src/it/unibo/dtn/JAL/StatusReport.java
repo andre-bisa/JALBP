@@ -31,6 +31,10 @@ public class StatusReport {
 		this(null);
 	}
 	
+	public StatusReport(Bundle bundle) {
+		this.bundle = bundle;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -144,10 +148,6 @@ public class StatusReport {
 	public Bundle getReferredBundle() {
 		return bundle;
 	}
-	
-	public StatusReport(Bundle bundle) {
-		this.bundle = bundle;
-	}
 
 	public BundleEID getSource() {
 		return source;
@@ -195,6 +195,18 @@ public class StatusReport {
 
 	public void setFlags(List<StatusReportFlag> flags) {
 		this.flags = new LinkedList<>(flags);
+	}
+	
+	public void addFlag(StatusReportFlag flag) {
+		this.flags.add(flag);
+	}
+	
+	public boolean removeFlag(StatusReportFlag flag) {
+		return this.flags.remove(flag);
+	}
+	
+	public void clearAllFlags() {
+		this.flags.clear();
 	}
 
 	public BundleTimestamp getReceiptTimestamp() {

@@ -164,7 +164,8 @@ public class BPSocket implements Closeable {
 	 * Sends a Bundle through the DTN connection
 	 * @param bundle The Bundle to send
 	 * @throws JALException According to ALBPException.
-	 * @throws IllegalArgumentException In case the expiration is &#60;= 0 or the destination is invalid.
+	 * @throws IllegalArgumentException In case the expiration is &#60;= 0 or the destination is invalid or the BundlePayload is null.
+	 * @throws IllegalStateException In case the flags in {@link StatusReport} are setted but is not set the ReplyTo.
 	 * @see JALException
 	 * @see ExceptionManager
 	 */
@@ -173,6 +174,12 @@ public class BPSocket implements Closeable {
 			throw new IllegalArgumentException("The expiration can't be <= 0.");
 		if (bundle.getDestination().toString().length() <= 0)
 			throw new IllegalArgumentException("The destination can't be empty.");
+		if (bundle.getPayload() == null)
+			throw new IllegalArgumentException("The BundlePayload can't be null.");
+		if (bundle.getReplyTo() != null && !bundle.getReplyTo().isPresent() && bundle.getDeliveryOptions() != null && bundle.getDeliveryOptions().size() == 0)
+			throw new IllegalStateException("Can't set flags in StatusReport without a ReplyTo.");
+		if (bundle.getReplyTo() != null && bundle.getReplyTo().isPresent() && bundle.getReplyTo().get().equals(BundleEID.NoneEndpoint) && bundle.getDeliveryOptions() != null && bundle.getDeliveryOptions().size() == 0)
+			throw new IllegalStateException("Can't set flags in StatusReport without a dtn:none ReplyTo.");
 		
 		if (bundle.getSource() == null)
 			bundle.setSource(BundleEID.of(this.getLocalEID()));
