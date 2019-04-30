@@ -15,7 +15,7 @@ import java.util.Optional;
 public class Bundle {
 
 	// *** BUNDLE ID
-	private BundleEID source = null;
+	private Optional<BundleEID> source = Optional.empty();
 	private BundleTimestamp creationTimestamp = null;
 	private int fragmentOffset = 0;
 	private int origLength = 0;
@@ -39,12 +39,36 @@ public class Bundle {
 	private BundlePayload payload = null;
 	
 	/**
-	 * Creates an empty bundle
+	 * Creates a new bundle
+	 * @param destination The destination
+	 * @throws IllegalArgumentException In case of destination==null
 	 */
-	public Bundle() {
+	public Bundle(BundleEID destination) throws IllegalArgumentException {
+		this();
+		if (destination == null)
+			throw new IllegalArgumentException("Destination can't be null.");
+		this.setDestination(destination);
+	}
+	
+	/**
+	 * Creates a new bundle
+	 * @param destination The destination
+	 * @param expiration Expiration in seconds
+	 * @throws IllegalArgumentException In case of destination==null
+	 */
+	public Bundle(BundleEID destination, int expiration) throws IllegalArgumentException {
+		this(destination);
+		this.setExpiration(expiration);
+	}
+	
+	/**
+	 * Creates an empty bundle (used in BPSocket.receive()
+	 */
+	Bundle() {
 		this.deliveryOptions.add(BundleDeliveryOption.None);
 		this.creationTimestamp = new BundleTimestamp(0, 0);
 		this.priority = new BundlePriority(0);
+		this.expiration = 60;
 	}
 
 	public byte[] getData() {
@@ -55,7 +79,10 @@ public class Bundle {
 	}
 	
 	public BundleEID getSource() {
-		return source;
+		if (this.source.isPresent())
+			return this.source.get();
+		else
+			return null;
 	}
 
 	public BundleTimestamp getCreationTimestamp() {
@@ -119,7 +146,7 @@ public class Bundle {
 	}
 
 	public void setSource(BundleEID source) {
-		this.source = source;
+		this.source = Optional.of(source);
 	}
 
 	public void setCreationTimestamp(BundleTimestamp creationTimestamp) {
@@ -374,7 +401,7 @@ public class Bundle {
 	
 	@SuppressWarnings("unused")
 	private String getSourceAsString() {
-		return this.source.toString();
+		return this.source.get().toString();
 	}
 	
 	@SuppressWarnings("unused")

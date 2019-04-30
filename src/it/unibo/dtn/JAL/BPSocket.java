@@ -68,6 +68,14 @@ public class BPSocket implements Closeable {
 	}
 
 	/**
+	 * Gets the local EID with you registered
+	 * @return The local EID you registered
+	 */
+	public String getLocalEID() {
+		return c_get_local_eid(this.registrationDescriptor);
+	}
+	
+	/**
 	 * Closes the Socket.
 	 * @throws IOException The IOException incapsulates the {@link JALException}
 	 */
@@ -166,6 +174,9 @@ public class BPSocket implements Closeable {
 		if (bundle.getDestination().toString().length() <= 0)
 			throw new IllegalArgumentException("The destination can't be empty.");
 		
+		if (bundle.getSource() == null)
+			bundle.setSource(BundleEID.of(this.getLocalEID()));
+		
 		int ris = c_send(this.registrationDescriptor, bundle);
 		ExceptionManager.checkError(ris, "Error on sending bundle.");
 	}
@@ -241,5 +252,6 @@ public class BPSocket implements Closeable {
 	private static native int c_unregister(int registrationDescriptor);
 	private static native int c_receive(int registrationDescriptor, Bundle bundle, int payloadLocation, int timeout);
 	private static native int c_send(int registrationDescriptor, Bundle bundle);
+	private static native String c_get_local_eid(int registrationDescriptor);
 	
 }

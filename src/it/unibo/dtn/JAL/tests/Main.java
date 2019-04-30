@@ -4,6 +4,9 @@ import java.io.IOException;
 
 import it.unibo.dtn.JAL.BPSocket;
 import it.unibo.dtn.JAL.Bundle;
+import it.unibo.dtn.JAL.BundleEID;
+import it.unibo.dtn.JAL.BundlePayload;
+import it.unibo.dtn.JAL.BundlePayloadMemory;
 import it.unibo.dtn.JAL.JALEngine;
 import it.unibo.dtn.JAL.exceptions.JALException;
 import it.unibo.dtn.JAL.exceptions.JALReceptionInterruptedException;
@@ -23,13 +26,21 @@ class Main {
 			} catch (JALReceptionInterruptedException e) {continue;}
 			catch (JALTimeoutException e) {
 				System.out.println("Timeout");
+				continue;
 			}
-			bundle.setDestination(bundle.getSource());
-			bundle.setExpiration(60);
-			socket.send(bundle);
+			
+			Bundle b = new Bundle(bundle.getSource());
+			//b.setSource(BundleEID.of("ipn:5.10"));
+			BundlePayload payload = new BundlePayloadMemory("1234".getBytes());
+			b.setPayload(payload);
+			//bundle.setExpiration(60);
+			//bundle.setDestination(bundle.getSource());
+			
+			
+			socket.send(b);
 		}
 		
-		socket.close();
+		socket.unregister();
 		JALEngine.getInstance().destroy();
 	}
 
