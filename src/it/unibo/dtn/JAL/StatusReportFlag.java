@@ -18,16 +18,25 @@ Delivered(8),
 Deleted(16),
 AckedByApp(32);
 	
-	private int intVal;
+	private final int intVal;
 	private StatusReportFlag(int val) {
 		this.intVal = val;
 	}
 	
-	public int getValue() {
+	/**
+	 * Gets the value (for C code)
+	 * @return The value according to C code
+	 */
+	int getValue() {
 		return this.intVal;
 	}
 	
-	public static List<StatusReportFlag> of(int val) {
+	/**
+	 * Returns the List from value according to C code
+	 * @param val The value according to C code
+	 * @return The List from the value according to C code
+	 */
+	static List<StatusReportFlag> of(int val) {
 		List<StatusReportFlag> result = new LinkedList<>();
 		if (val >= AckedByApp.getValue()) {
 			val -= AckedByApp.getValue();

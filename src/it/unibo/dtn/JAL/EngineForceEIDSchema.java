@@ -1,7 +1,7 @@
 package it.unibo.dtn.JAL;
 
 /** 
- * Force EID Schema
+ * Force EID Schema used in some {@link JALEngine} functione
  * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
@@ -12,17 +12,17 @@ NOFORCE('N'),
 IPN('I'),
 DTN('D');
 	
-	private char forceEIDSchema; 
+	private final char forceEIDSchema; 
 	
 	private EngineForceEIDSchema(char forceEID) {
 		this.forceEIDSchema = forceEID;
 	}
 	
 	/**
-	 * Returns the char referred to the forcing schema
-	 * @return The char referred to the forcing schema
+	 * Returns the char referred to the forcing schema (according to C code)
+	 * @return The char referred to the forcing schema (according to C code)
 	 */
-	public char getCharForceEIDSchema() {
+	char getCharForceEIDSchema() {
 		return this.forceEIDSchema;
 	}
 }

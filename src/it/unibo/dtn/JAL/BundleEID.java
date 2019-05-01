@@ -12,14 +12,13 @@ import java.net.URI;
 public abstract class BundleEID {
 
 	/**
-	 * None endpoint
+	 * None endpoint according to standard. The value will be dtn:none
 	 */
-	public static BundleEID NoneEndpoint = new BundleEIDDTNScheme("none");
+	public static final BundleEID NoneEndpoint = new BundleEIDDTNScheme("none");
 	
 	private URI uri = null;
 	
-	protected BundleEID() {
-	}
+	protected BundleEID() {}
 	
 	protected void setEndpointID(URI uri) {
 		this.uri = uri;
@@ -72,8 +71,9 @@ public abstract class BundleEID {
 	 * Factory constructor of DTNEndpointID
 	 * @param uri IPN or DTN URI
 	 * @return The DTNEndpointID
+	 * @throws IllegalArgumentException More information in constructors of {@link BundleEIDIPNScheme} and {@link BundleEIDDTNScheme}
 	 */
-	public static BundleEID of(URI uri) {
+	public static BundleEID of(URI uri) throws IllegalArgumentException {
 		if (uri == null)
 			return null;
 		

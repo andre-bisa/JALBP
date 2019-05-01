@@ -11,7 +11,7 @@ import java.util.List;
  *
  */
 public class StatusReport {
-	private Bundle bundle;
+	private final Bundle bundle;
 	
 	private BundleEID source;
 	private BundleTimestamp creationTimestamp;
@@ -27,11 +27,11 @@ public class StatusReport {
 	private BundleTimestamp deletionTimestamp;
 	private BundleTimestamp ackByAppTimestamp;
 	
-	public StatusReport() {
-		this(null);
-	}
-	
-	public StatusReport(Bundle bundle) {
+	/**
+	 * Creates a Status Report linked to a Bundle
+	 * @param bundle The bundle where the Status Report is inserted into
+	 */
+	StatusReport(Bundle bundle) {
 		this.bundle = bundle;
 	}
 	
@@ -153,7 +153,7 @@ public class StatusReport {
 		return source;
 	}
 
-	public void setSource(BundleEID source) {
+	void setSource(BundleEID source) {
 		this.source = source;
 	}
 
@@ -161,7 +161,7 @@ public class StatusReport {
 		return creationTimestamp;
 	}
 
-	public void setCreationTimestamp(BundleTimestamp creationTimestamp) {
+	void setCreationTimestamp(BundleTimestamp creationTimestamp) {
 		this.creationTimestamp = creationTimestamp;
 	}
 
@@ -169,7 +169,7 @@ public class StatusReport {
 		return fragmentOffset;
 	}
 
-	public void setFragmentOffset(int fragmentOffset) {
+	void setFragmentOffset(int fragmentOffset) {
 		this.fragmentOffset = fragmentOffset;
 	}
 
@@ -177,7 +177,7 @@ public class StatusReport {
 		return origLength;
 	}
 
-	public void setOrigLength(int origLength) {
+	void setOrigLength(int origLength) {
 		this.origLength = origLength;
 	}
 
@@ -185,7 +185,7 @@ public class StatusReport {
 		return reason;
 	}
 
-	public void setReason(StatusReportReason reason) {
+	void setReason(StatusReportReason reason) {
 		this.reason = reason;
 	}
 
@@ -193,27 +193,15 @@ public class StatusReport {
 		return new LinkedList<>(this.flags);
 	}
 
-	public void setFlags(List<StatusReportFlag> flags) {
+	void setFlags(List<StatusReportFlag> flags) {
 		this.flags = new LinkedList<>(flags);
-	}
-	
-	public void addFlag(StatusReportFlag flag) {
-		this.flags.add(flag);
-	}
-	
-	public boolean removeFlag(StatusReportFlag flag) {
-		return this.flags.remove(flag);
-	}
-	
-	public void clearAllFlags() {
-		this.flags.clear();
 	}
 
 	public BundleTimestamp getReceiptTimestamp() {
 		return receiptTimestamp;
 	}
 
-	public void setReceiptTimestamp(BundleTimestamp receiptTimestamp) {
+	void setReceiptTimestamp(BundleTimestamp receiptTimestamp) {
 		this.receiptTimestamp = receiptTimestamp;
 	}
 
@@ -221,7 +209,7 @@ public class StatusReport {
 		return custodyTimestamp;
 	}
 
-	public void setCustodyTimestamp(BundleTimestamp custodyTimestamp) {
+	void setCustodyTimestamp(BundleTimestamp custodyTimestamp) {
 		this.custodyTimestamp = custodyTimestamp;
 	}
 
@@ -229,7 +217,7 @@ public class StatusReport {
 		return forwardingTimestamp;
 	}
 
-	public void setForwardingTimestamp(BundleTimestamp forwardingTimestamp) {
+	void setForwardingTimestamp(BundleTimestamp forwardingTimestamp) {
 		this.forwardingTimestamp = forwardingTimestamp;
 	}
 
@@ -237,7 +225,7 @@ public class StatusReport {
 		return deliveryTimestamp;
 	}
 
-	public void setDeliveryTimestamp(BundleTimestamp deliveryTimestamp) {
+	void setDeliveryTimestamp(BundleTimestamp deliveryTimestamp) {
 		this.deliveryTimestamp = deliveryTimestamp;
 	}
 
@@ -245,7 +233,7 @@ public class StatusReport {
 		return deletionTimestamp;
 	}
 
-	public void setDeletionTimestamp(BundleTimestamp deletionTimestamp) {
+	void setDeletionTimestamp(BundleTimestamp deletionTimestamp) {
 		this.deletionTimestamp = deletionTimestamp;
 	}
 
@@ -253,7 +241,7 @@ public class StatusReport {
 		return ackByAppTimestamp;
 	}
 
-	public void setAckByAppTimestamp(BundleTimestamp ackByAppTimestamp) {
+	void setAckByAppTimestamp(BundleTimestamp ackByAppTimestamp) {
 		this.ackByAppTimestamp = ackByAppTimestamp;
 	}
 

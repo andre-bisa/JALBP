@@ -14,7 +14,6 @@ import it.unibo.dtn.JAL.exceptions.JALTimeoutException;
  *
  */
 public class BPSocket implements Closeable {
-
 	private int registrationDescriptor = -1;
 	private boolean registered = false;
 	

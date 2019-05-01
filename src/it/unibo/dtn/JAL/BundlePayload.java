@@ -13,22 +13,23 @@ import java.io.InputStreamReader;
  *
  */
 public abstract class BundlePayload {
-
-	private BundlePayloadLocation location = null;
-	private StatusReport statusReport = null;
+	private final BundlePayloadLocation location;
 	
-	protected BundlePayload(BundlePayloadLocation location) {
+	/**
+	 * Base constructor of Bundle Payload
+	 * @param location PayloadLocation
+	 * @throws IllegalArgumentException In case of null value
+	 */
+	protected BundlePayload(BundlePayloadLocation location) throws IllegalArgumentException {
+		if (location == null)
+			throw new IllegalArgumentException("Location can't be null.");
 		this.location = location;
 	}
 	
-	protected void setStatusReport(StatusReport statusReport) {
-		this.statusReport = statusReport;
-	}
-	
-	protected StatusReport getStatusReport() {
-		return this.statusReport;
-	}
-	
+	/**
+	 * Returns the payload location
+	 * @return The payload location where the data are saved
+	 */
 	public BundlePayloadLocation getPayloadLocation() {
 		return this.location;
 	}
@@ -37,22 +38,25 @@ public abstract class BundlePayload {
 		return new ByteArrayInputStream(this.getData());
 	}
 
-	public BufferedReader getBufferedReader() {
-		return new BufferedReader(this.getInputStreamReader());
-	}
-
 	public InputStreamReader getInputStreamReader() {
 		return new InputStreamReader(this.getInputStream());
 	}
 	
-	public abstract byte[] getData();
+	public BufferedReader getBufferedReader() {
+		return new BufferedReader(this.getInputStreamReader());
+	}
 	
+	/**
+	 * Gets the data payload data
+	 * @return The payload data
+	 */
+	public abstract byte[] getData();
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((location == null) ? 0 : location.hashCode());
-		result = prime * result + ((statusReport == null) ? 0 : statusReport.hashCode());
 		return result;
 	}
 
@@ -69,13 +73,6 @@ public abstract class BundlePayload {
 		}
 		BundlePayload other = (BundlePayload) obj;
 		if (location != other.location) {
-			return false;
-		}
-		if (statusReport == null) {
-			if (other.statusReport != null) {
-				return false;
-			}
-		} else if (!statusReport.equals(other.statusReport)) {
 			return false;
 		}
 		return true;
@@ -96,5 +93,17 @@ public abstract class BundlePayload {
 		if (data == null)
 			throw new IllegalArgumentException("Data can't be null.");
 		return new BundlePayloadMemory(data);
+	}
+	
+	/**
+	 * Payload factory
+	 * @param fileName The filename
+	 * @return The BundlePayload created
+	 * @throws IllegalArgumentException
+	 */
+	public static BundlePayload of(String fileName) throws IllegalArgumentException {
+		if (fileName == null)
+			throw new IllegalArgumentException("Filename can't be null.");
+		return new BundlePayloadFile(fileName);
 	}
 }

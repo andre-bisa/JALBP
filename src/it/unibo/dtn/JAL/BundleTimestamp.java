@@ -11,6 +11,11 @@ class BundleTimestamp {
 	private int seconds;
 	private int sequenceNumber;
 	
+	/**
+	 * Creates a timestamp
+	 * @param seconds The seconds
+	 * @param sequenceNumber The sequence Number
+	 */
 	public BundleTimestamp(int seconds, int sequenceNumber) {
 		super();
 		this.seconds = seconds;
@@ -65,7 +70,11 @@ class BundleTimestamp {
 	
 	@Override
 	public String toString() {
-		return ""+this.seconds+"."+this.sequenceNumber;
+		StringBuilder result = new StringBuilder();
+		result.append(this.seconds);
+		result.append('.');
+		result.append(this.sequenceNumber);
+		return result.toString();
 	}
 
 }

@@ -22,16 +22,25 @@ SingletonDestination(64),
 MultinodeDestination(128),
 DoNotFragment(256);
 	
-	private int intVal;
+	private final int intVal;
 	private BundleDeliveryOption(int val) {
 		this.intVal = val;
 	}
 	
-	public int getValue() {
+	/**
+	 * Returns the value according to C code
+	 * @return The value according to C code
+	 */
+	int getValue() {
 		return this.intVal;
 	}
 	
-	public static List<BundleDeliveryOption> of(int val) {
+	/**
+	 * Returns the List according to C code
+	 * @param val The value according to C code
+	 * @return The List
+	 */
+	static List<BundleDeliveryOption> of(int val) {
 		List<BundleDeliveryOption> result = new LinkedList<>();
 		if (val == None.getValue()) {
 			result.add(None);

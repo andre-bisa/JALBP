@@ -4,33 +4,45 @@ import it.unibo.dtn.JAL.exceptions.JALException;
 import it.unibo.dtn.JAL.exceptions.JALInitException;
 
 /** 
- * ALBPEngine
+ * Class used to force some parameters in DTN sockets.<br>
+ * You can force the EID schema and the IPN Node in case you are using DTN2 implementation.<br>
+ * <p>
+ * <b>Usage:</b><br>
+ * <ol>
+ * <li>Call {@link #getInstance()} to get the instance.</li>
+ * <li>(Optional) Set the forcing parameters before opening {@link BPSocket}s ({@link #setForceEIDSchema(EngineForceEIDSchema)} and {@link #setIPNNodeForDTN2(int)}).</li>
+ * <li>(Optional) Call {@link #init()} function.</li>
+ * <li>Call {@link #destroy()} function when all {@link BPSocket}s are closed and you don't want to open anymore.</li>
+ * </ol>
+ * </p>
+ * 
  * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *
  */
 public class JALEngine {
-	
 	private EngineForceEIDSchema forceEID = EngineForceEIDSchema.NOFORCE;
 	private int IPNNodeForDTN2 = 0;
 	
 	private boolean initialized = false;
 	
 	/**
-	 * Getter of EngineForceEID
-	 * @return The ForceEIDSchema
+	 * Getter of Force EID
+	 * @return The Force EID
 	 */
 	public EngineForceEIDSchema getForceEID() {
 		return this.forceEID;
 	}
 	
 	/**
-	 * Sets the DorceEIDSchema
+	 * Sets the ForceEIDSchema
 	 * @param forceEIDSchema To set
+	 * @return This object (for serial set calls)
 	 */
-	public void setForceEIDSchema(EngineForceEIDSchema forceEIDSchema) {
+	public JALEngine setForceEIDSchema(EngineForceEIDSchema forceEIDSchema) {
 		this.forceEID = forceEIDSchema;
+		return this;
 	}
 	
 	/**
@@ -44,9 +56,11 @@ public class JALEngine {
 	/**
 	 * Sets the IPNNodeForDTN2
 	 * @param IPNNodeForDTN2 To set
+	 * @return This object (for serial set calls)
 	 */
-	public void setIPNNodeForDTN2(int IPNNodeForDTN2 ) {
+	public JALEngine setIPNNodeForDTN2(int IPNNodeForDTN2 ) {
 		this.IPNNodeForDTN2 = IPNNodeForDTN2;
+		return this;
 	}
 	
 	/**
@@ -65,7 +79,7 @@ public class JALEngine {
 	
 	/**
 	 * <b>Important function.</b><br>
-	 * You have to call this function when you don't want to use {@link BPSocket}s anymore. 
+	 * You have to call this function when all {@link BPSocket}s are closed and you don't want to use {@link BPSocket}s anymore. 
 	 */
 	public void destroy() {
 		if (this.initialized) {
@@ -87,7 +101,7 @@ public class JALEngine {
 			throw new JALInitException("ALLBP not initialized.");
 	}
 	
-	private static JALEngine instance = null;
+	private static JALEngine instance = null; // Singleton
 	private JALEngine() {}
 	/**
 	 * The ALBPEngine is a singleton object.
@@ -118,9 +132,7 @@ public class JALEngine {
 	}
 	
 	private static native int c_init(char force_eid, int IPNNodeForDTN2);
-	
 	private static native void c_destroy();
-
 	private static native char c_get_eid_format();
 	
 }

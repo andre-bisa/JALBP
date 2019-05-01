@@ -14,6 +14,12 @@ public class BundleExtensionBlock {
 	private int flags;
 	private byte[] data;
 	
+	/**
+	 * Creates an Extension block (can be metadata or general block)
+	 * @param data The data
+	 * @param flags Flags
+	 * @param type The type
+	 */
 	public BundleExtensionBlock(byte[] data, int flags, int type) {
 		this.data = data;
 		this.flags = flags;

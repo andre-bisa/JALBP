@@ -1,7 +1,8 @@
 package it.unibo.dtn.JAL;
 
 /** 
- * Payload Location
+ * Payload Location.<br>
+ * Position where the Payload will be stored
  * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
@@ -12,31 +13,30 @@ File(0),
 Memory(1),
 TemporaryFile(2);
 	
-	private int intVal;
+	private final int intVal;
 	private BundlePayloadLocation(int val) {
 		this.intVal = val;
 	}
 	
 	/**
-	 * 
-	 * @return Value for C code
+	 * The value according to C code 
+	 * @return Value according to C code
 	 */
-	public int getValue() {
+	int getValue() {
 		return this.intVal;
 	}
 	
 	/**
-	 * Creates a PayloadLocation from an integer.
-	 * @param val The value according to {@link #getValue()}
-	 * @return A PayloadLocation
+	 * Creates a PayloadLocation from a value (according to C code)
+	 * @param val The value according to C code
+	 * @return A PayloadLocation or null if the val is not found
 	 */
-	public static BundlePayloadLocation of(int val) {
-		switch (val) {
-		case 0: return File;
-		case 1: return Memory;
-		case 2: return TemporaryFile;
-		default: return null;
+	static BundlePayloadLocation of(int val) {
+		for (BundlePayloadLocation currentPayloadLocation : BundlePayloadLocation.values()) {
+			if (currentPayloadLocation.getValue() == val)
+				return currentPayloadLocation;
 		}
+		return null;
 	}
 	
 }

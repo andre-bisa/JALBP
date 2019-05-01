@@ -19,14 +19,13 @@ import it.unibo.dtn.JAL.exceptions.JALTimeoutException;
 import it.unibo.dtn.JAL.exceptions.JALUnregisterException;
 
 /** 
- * Exception Manager. Very usefull to have a generic resolution of ALBPExceptions.
+ * Exception Manager. Very usefull to have a generic resolution of Exception.
  * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *
  */
 class ExceptionManager {
-
 	private ExceptionManager() {}
 	
 	/**
@@ -37,7 +36,7 @@ class ExceptionManager {
 	 */
 	public static void checkError(int error, String errorString) throws JALException {
 		switch (error) {
-		case 0: // Everything is ok
+		case 0: // No error -> everything is ok
 			break;
 
 		case 1:	throw new JALNullPointerException(errorString + " Error, null pointer passed to C code.");
