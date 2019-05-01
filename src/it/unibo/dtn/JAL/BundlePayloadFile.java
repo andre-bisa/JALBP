@@ -45,11 +45,15 @@ public class BundlePayloadFile extends BundlePayload {
 	}
 
 	@Override
-	public InputStream getInputStream() throws IOException {
+	public InputStream getInputStream() {
 		OpenOption openOption = StandardOpenOption.READ;
-		if (this.tempFile)
-			openOption = StandardOpenOption.DELETE_ON_CLOSE;
-		return Files.newInputStream(this.path, openOption);
+		try {
+			if (this.tempFile)
+				openOption = StandardOpenOption.DELETE_ON_CLOSE;
+			return Files.newInputStream(this.path, openOption);
+		} catch (IOException e) {
+			return null;
+		}
 	}
 	
 	@Override

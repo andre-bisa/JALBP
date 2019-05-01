@@ -1,7 +1,6 @@
 package it.unibo.dtn.JAL;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collection;
@@ -103,13 +102,8 @@ public class Bundle {
 	public InputStream getInputStream() {
 		if (this.payload == null)
 			return null;
-		else {
-			try {
-				return this.payload.getInputStream();
-			} catch (IOException e) {
-				return null;
-			}
-		}
+		else
+			return this.payload.getInputStream();
 	}
 
 	/**
@@ -120,13 +114,8 @@ public class Bundle {
 	public BufferedReader getBufferedReader() {
 		if (this.payload == null)
 			return null;
-		else {
-			try {
-				return this.payload.getBufferedReader();
-			} catch (IOException e) {
-				return null;
-			}
-		}
+		else 
+			return this.payload.getBufferedReader();
 	}
 
 	/**
@@ -137,13 +126,8 @@ public class Bundle {
 	public InputStreamReader getInputStreamReader() {
 		if (this.payload == null)
 			return null;
-		else {
-			try {
-				return this.payload.getInputStreamReader();
-			} catch (IOException e) {
-				return null;
-			}
-		}
+		else 
+			return this.payload.getInputStreamReader();
 	}
 	
 	public BundleEID getSource() {
