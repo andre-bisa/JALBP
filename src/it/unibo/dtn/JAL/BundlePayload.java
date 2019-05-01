@@ -2,6 +2,7 @@ package it.unibo.dtn.JAL;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -34,15 +35,15 @@ public abstract class BundlePayload {
 		return this.location;
 	}
 	
-	public InputStream getInputStream() {
+	public InputStream getInputStream() throws IOException {
 		return new ByteArrayInputStream(this.getData());
 	}
 
-	public InputStreamReader getInputStreamReader() {
+	public InputStreamReader getInputStreamReader() throws IOException {
 		return new InputStreamReader(this.getInputStream());
 	}
 	
-	public BufferedReader getBufferedReader() {
+	public BufferedReader getBufferedReader() throws IOException {
 		return new BufferedReader(this.getInputStreamReader());
 	}
 	

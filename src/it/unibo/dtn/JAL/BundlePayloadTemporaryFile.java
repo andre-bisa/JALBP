@@ -1,7 +1,7 @@
 package it.unibo.dtn.JAL;
 
 /** 
- * Payload saved in Temporary File (deleted after the first {@link #getData()})
+ * Payload saved in Temporary File (deleted after the first read)
  * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0

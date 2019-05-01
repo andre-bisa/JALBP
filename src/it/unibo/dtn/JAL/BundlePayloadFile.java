@@ -1,9 +1,12 @@
 package it.unibo.dtn.JAL;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 /** 
  * Payload saved or loaded from File
@@ -41,6 +44,14 @@ public class BundlePayloadFile extends BundlePayload {
 		this.tempFile = isTempFile;
 	}
 
+	@Override
+	public InputStream getInputStream() throws IOException {
+		OpenOption openOption = StandardOpenOption.READ;
+		if (this.tempFile)
+			openOption = StandardOpenOption.DELETE_ON_CLOSE;
+		return Files.newInputStream(this.path, openOption);
+	}
+	
 	@Override
 	public byte[] getData() {
 		if (data != null)
