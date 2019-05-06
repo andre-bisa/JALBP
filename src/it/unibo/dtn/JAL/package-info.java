@@ -6,15 +6,14 @@
  *  <p>
  *  To use this library you have to follow some easy steps:
  *  	<ol>
- *  		<li>Get the instance and set the parameters of {@link it.unibo.dtn.JAL.JALEngine} before calling init() function (optional step).</li>
+ *  		<li>Get the instance and set the parameters of {@link it.unibo.dtn.JAL.JALEngine} before calling {@link it.unibo.dtn.JAL.JALEngine#init()} function (optional step).</li>
  *  		<li>Register one or more {@link it.unibo.dtn.JAL.BPSocket}s.</li>
  *  		<li>Send/receive {@link it.unibo.dtn.JAL.Bundle}s.</li>
  *  		<li>Close the {@link it.unibo.dtn.JAL.BPSocket}s.</li>
- *  		<li>When you will not use anymore the library you should call the destroy method in {@link it.unibo.dtn.JAL.JALEngine}.</li>
+ *  		<li>When you will not use anymore the library you should call {@link it.unibo.dtn.JAL.JALEngine#destroy()}.</li>
  *  	</ol>
  *  </p>
  *  
- * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  */

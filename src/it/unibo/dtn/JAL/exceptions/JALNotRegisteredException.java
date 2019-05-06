@@ -5,7 +5,7 @@ package it.unibo.dtn.JAL.exceptions;
  * @author Andrea Bisacchi
  *
  */
-public class JALNotRegisteredException extends JALException {
+public class JALNotRegisteredException extends RuntimeException {
 
 	private static final long serialVersionUID = 9210458729062575129L;
 

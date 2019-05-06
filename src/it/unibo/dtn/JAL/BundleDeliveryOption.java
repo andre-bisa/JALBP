@@ -4,8 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /** 
- * Delivery Option
- * <p>Creation date: 10/04/2019</p>
+ * Delivery option required when sending a bundle
  * @author Andrea Bisacchi
  * @version 1.0
  *

@@ -4,8 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /** 
- * Status Report Flag
- * <p>Creation date: 10/04/2019</p>
+ * <p>
+ * The status report flags
+ * </p>
  * @author Andrea Bisacchi
  * @version 1.0
  *

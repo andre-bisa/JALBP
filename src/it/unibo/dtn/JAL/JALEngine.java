@@ -1,8 +1,16 @@
 package it.unibo.dtn.JAL;
 
-import it.unibo.dtn.JAL.exceptions.JALException;
+import it.unibo.dtn.JAL.exceptions.JALDTN2ParametersException;
+import it.unibo.dtn.JAL.exceptions.JALGeneralException;
 import it.unibo.dtn.JAL.exceptions.JALInitException;
 import it.unibo.dtn.JAL.exceptions.JALLibraryNotFoundException;
+import it.unibo.dtn.JAL.exceptions.JALNoImplementationFoundException;
+import it.unibo.dtn.JAL.exceptions.JALNotRegisteredException;
+import it.unibo.dtn.JAL.exceptions.JALNullPointerException;
+import it.unibo.dtn.JAL.exceptions.JALReceiveException;
+import it.unibo.dtn.JAL.exceptions.JALRegisterException;
+import it.unibo.dtn.JAL.exceptions.JALSendException;
+import it.unibo.dtn.JAL.exceptions.JALUnregisterException;
 
 /** 
  * Class used to force some parameters in DTN sockets.<br>
@@ -11,7 +19,7 @@ import it.unibo.dtn.JAL.exceptions.JALLibraryNotFoundException;
  * <b>Usage:</b><br>
  * <ol>
  * <li>Call {@link #getInstance()} to get the instance.</li>
- * <li>(Optional) Set the forcing parameters before opening {@link BPSocket}s ({@link #setForceEIDSchema(EngineForceEIDSchema)} and {@link #setIPNNodeForDTN2(int)}).</li>
+ * <li>(Optional) Set the forcing parameters before opening {@link BPSocket}s ({@link #setForceEIDscheme(EngineForceEIDscheme)} and {@link #setIPNNodeForDTN2(int)}).</li>
  * <li>(Optional) Call {@link #init()} function.</li>
  * <li>Call {@link #destroy()} function when all {@link BPSocket}s are unregistered and you are not willing to open anymore.</li>
  * </ol>
@@ -23,7 +31,7 @@ import it.unibo.dtn.JAL.exceptions.JALLibraryNotFoundException;
  *
  */
 public class JALEngine {
-	private EngineForceEIDSchema forceEID = EngineForceEIDSchema.NOFORCE;
+	private EngineForceEIDScheme forceEID = EngineForceEIDScheme.NOFORCE;
 	private int IPNNodeForDTN2 = 0;
 	
 	private boolean initialized = false;
@@ -32,20 +40,20 @@ public class JALEngine {
 	 * Returns the Force EID scheme
 	 * @return The Force EID
 	 */
-	public EngineForceEIDSchema getForceEID() {
+	public EngineForceEIDScheme getForceEID() {
 		return this.forceEID;
 	}
 	
 	/**
 	 * Requires to force the scheme
-	 * @param forceEIDSchema - the scheme to force
+	 * @param forceEIDscheme - the scheme to force
 	 * @return This object (for serial settings calls)
 	 * @throws IllegalStateException In case you try to change after the creation of a {@link BPSocket}
 	 */
-	public JALEngine setForceEIDSchema(EngineForceEIDSchema forceEIDSchema) throws IllegalStateException {
+	public JALEngine setForceEIDScheme(EngineForceEIDScheme forceEIDscheme) throws IllegalStateException {
 		if (this.initialized)
 			throw new IllegalStateException();
-		this.forceEID = forceEIDSchema;
+		this.forceEID = forceEIDscheme;
 		return this;
 	}
 	
@@ -72,15 +80,23 @@ public class JALEngine {
 	
 	/**
 	 * <b>Important function.</b><br>
-	 * Before calling this function, if you need to, you have to call {@link #setForceEIDSchema(EngineForceEIDSchema)} and {@link #setIPNNodeForDTN2(int)}.<br>
+	 * Before calling this function, if you need to, you have to call {@link #setForceEIDscheme(EngineForceEIDscheme)} and {@link #setIPNNodeForDTN2(int)}.<br>
 	 * This function have to be called once before using {@link BPSocket}.<br>
 	 * In case you will not call {@link #init()} the {@link BPSocket} will do it for you.
-	 * @throws JALException See @{@link JALException}
+	 * @throws JALNoImplementationFoundException - in case no DTN implementations were found in the current system
+	 * @throws JALDTN2ParametersException - in case you are forcing IPN scheme but the 
+	 * @throws JALInitException - in case of other occurrences
 	 */
-	public void init() throws JALException {
+	public void init() throws JALNoImplementationFoundException, JALDTN2ParametersException, JALInitException {
 		if (this.initialized) return;
-		int error = JALEngine.c_init(this.forceEID.getCharForceEIDSchema(), this.IPNNodeForDTN2);
-		ExceptionManager.checkError(error, "Error on ALBPEngine.init.");
+		int error = JALEngine.c_init(this.forceEID.getCharForceEIDScheme(), this.IPNNodeForDTN2);
+		try {
+			ExceptionManager.checkError(error, "Error on ALBPEngine.init.");
+		}
+		catch (JALSendException | JALReceiveException | JALNullPointerException
+				| JALRegisterException | JALUnregisterException | JALNotRegisteredException | JALGeneralException e) {
+			throw new JALInitException(e);
+		} 
 		this.initialized = true;
 	}
 	
@@ -96,16 +112,15 @@ public class JALEngine {
 	}
 	
 	/**
-	 * Returns the EIDFormat
+	 * Returns the EIDFormat. Before using this you have to initialize the engine calling {@link #init()}
 	 * @return The EIDFormat
-	 * @throws JALInitException In case of ALBPException
-	 * @see JALException
+	 * @throws JALInitException - in case the library is not initialized
 	 */
 	public BundleSchemeFlag getEIDFormat() throws JALInitException {
 		if (this.initialized)
-			return BundleSchemeFlag.getSchemaFromChar(JALEngine.c_get_eid_format());
+			return BundleSchemeFlag.getSchemeFromChar(JALEngine.c_get_eid_format());
 		else
-			throw new JALInitException("ALLBP not initialized.");
+			throw new  JALInitException("Library not initialized.");
 	}
 	
 	private static JALEngine instance = null; // Singleton
@@ -114,10 +129,11 @@ public class JALEngine {
 	 * Returns the instance of JALEngine.
 	 * @return The instance of JALEngine
 	 * @throws JALLibraryNotFoundException In case the library is not found in the system (probably not installed)
-	 * @throws JALException In case of Exceptions.
-	 * @see JALException
+	 * @throws JALNoImplementationFoundException - in case no DTN implementations were found in the current system
+	 * @throws JALDTN2ParametersException - in case you are forcing IPN scheme but the 
+	 * @throws JALInitException - in case of other occurrences
 	 */
-	public static JALEngine getInstance() throws JALException {
+	public static JALEngine getInstance() throws JALLibraryNotFoundException, JALNoImplementationFoundException, JALDTN2ParametersException, JALInitException {
 		if (JALEngine.instance == null) {
 			JALEngine.loadLibrary();
 			JALEngine.instance = new JALEngine();

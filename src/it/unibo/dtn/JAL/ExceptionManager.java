@@ -2,8 +2,8 @@ package it.unibo.dtn.JAL;
 
 import it.unibo.dtn.JAL.exceptions.JALCloseErrorException;
 import it.unibo.dtn.JAL.exceptions.JALDTN2ParametersException;
-import it.unibo.dtn.JAL.exceptions.JALException;
-import it.unibo.dtn.JAL.exceptions.JALExceptionIPNParameters;
+import it.unibo.dtn.JAL.exceptions.JALIPNParametersException;
+import it.unibo.dtn.JAL.exceptions.JALGeneralException;
 import it.unibo.dtn.JAL.exceptions.JALInitException;
 import it.unibo.dtn.JAL.exceptions.JALLocalEIDException;
 import it.unibo.dtn.JAL.exceptions.JALNoImplementationFoundException;
@@ -19,8 +19,7 @@ import it.unibo.dtn.JAL.exceptions.JALTimeoutException;
 import it.unibo.dtn.JAL.exceptions.JALUnregisterException;
 
 /** 
- * Exception Manager. Very usefull to have a generic resolution of Exception.
- * <p>Creation date: 10/04/2019</p>
+ * Exception Manager. Very usefull to have a generic resolution of Exceptions.
  * @author Andrea Bisacchi
  * @version 1.0
  *
@@ -32,9 +31,16 @@ class ExceptionManager {
 	 * Throws Exception in case the <b>error</b> is an AL_BP Exception
 	 * @param error The error resulted in AL_BP
 	 * @param errorString The custom String in case of Exception
-	 * @throws JALException In case the error is an Exception
+	 * @throws JALNullPointerException 
+	 * @throws JALInitException 
+	 * @throws JALRegisterException 
+	 * @throws JALUnregisterException 
+	 * @throws JALNotRegisteredException 
+	 * @throws JALSendException 
+	 * @throws JALReceiveException 
+	 * @throws JALGeneralException 
 	 */
-	public static void checkError(int error, String errorString) throws JALException {
+	public static void checkError(int error, String errorString) throws JALNullPointerException, JALInitException, JALRegisterException, JALUnregisterException, JALNotRegisteredException, JALSendException, JALReceiveException, JALGeneralException {
 		switch (error) {
 		case 0: // No error -> everything is ok
 			break;
@@ -65,22 +71,29 @@ class ExceptionManager {
 		
 		case 13: throw new JALReceiverException(errorString + " Error, the receiver is not indicated or is dtn:none.");
 		
-		case 14: throw new JALExceptionIPNParameters(errorString + " Error on passing value for IPN schema.");
+		case 14: throw new JALIPNParametersException(errorString + " Error on passing value for IPN schema.");
 
 		case 15: throw new JALDTN2ParametersException(errorString + " Error on parameters passed to DTN2.");
 
 		case 16: throw new JALNoImplementationFoundException(errorString + " Error, no implementation found.");
 
-		default: throw new JALException(errorString + " General error occurred. The error is not defined. Error code=" + error);
+		default: throw new JALGeneralException(errorString + " General error occurred. The error is not defined. Error code=" + error);
 		}
 	}
 
 	/**
 	 * The same as {@link #checkError(int, String) checkError} but without the costum String
 	 * @param error The error resulted in AL_BP
-	 * @throws JALException In case the error is an Exception
+	 * @throws JALGeneralException 
+	 * @throws JALNotRegisteredException 
+	 * @throws JALUnregisterException 
+	 * @throws JALRegisterException 
+	 * @throws JALInitException 
+	 * @throws JALNullPointerException 
+	 * @throws JALReceiveException 
+	 * @throws JALSendException 
 	 */
-	public static void checkError(int error) throws JALException {
+	public static void checkError(int error) throws JALSendException, JALReceiveException, JALNullPointerException, JALInitException, JALRegisterException, JALUnregisterException, JALNotRegisteredException, JALGeneralException {
 		checkError(error, "");
 	}
 

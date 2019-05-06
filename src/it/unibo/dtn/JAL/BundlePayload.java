@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 
 /** 
  * Bundle Payload
- * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *
@@ -34,14 +33,26 @@ public abstract class BundlePayload {
 		return this.location;
 	}
 	
+	/**
+	 * Returns the input stream for reading data
+	 * @return the input stream for reading data
+	 */
 	public InputStream getInputStream() {
 		return new ByteArrayInputStream(this.getData());
 	}
 
+	/**
+	 * Returns the input stream reader for reading data
+	 * @return the input stream reader for reading data
+	 */
 	public InputStreamReader getInputStreamReader() {
 		return new InputStreamReader(this.getInputStream());
 	}
 	
+	/**
+	 * Returns the buffered reader for reading data
+	 * @return the buffered reader for reading data
+	 */
 	public BufferedReader getBufferedReader() {
 		return new BufferedReader(this.getInputStreamReader());
 	}

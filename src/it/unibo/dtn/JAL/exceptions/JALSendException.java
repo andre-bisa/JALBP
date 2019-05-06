@@ -1,11 +1,13 @@
 package it.unibo.dtn.JAL.exceptions;
 
+import java.io.IOException;
+
 /** Send Exception
  * Creation date: 10/04/2019
  * @author Andrea Bisacchi
  *
  */
-public class JALSendException extends JALException {
+public class JALSendException extends IOException {
 
 	private static final long serialVersionUID = 8956910223105504096L;
 
@@ -22,10 +24,6 @@ public class JALSendException extends JALException {
 
 	public JALSendException(String arg0, Throwable arg1) {
 		super(arg0, arg1);
-	}
-
-	public JALSendException(String arg0, Throwable arg1, boolean arg2, boolean arg3) {
-		super(arg0, arg1, arg2, arg3);
 	}
 
 }

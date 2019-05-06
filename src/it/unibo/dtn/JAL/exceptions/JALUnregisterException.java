@@ -1,11 +1,13 @@
 package it.unibo.dtn.JAL.exceptions;
 
+import java.io.IOException;
+
 /** Unregister Exception
  * Creation date: 10/04/2019
  * @author Andrea Bisacchi
  *
  */
-public class JALUnregisterException extends JALException {
+public class JALUnregisterException extends IOException {
 
 	private static final long serialVersionUID = -2950992698091156927L;
 
@@ -22,11 +24,6 @@ public class JALUnregisterException extends JALException {
 
 	public JALUnregisterException(String message, Throwable cause) {
 		super(message, cause);
-	}
-
-	public JALUnregisterException(String message, Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
 	}
 
 }

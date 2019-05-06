@@ -5,7 +5,7 @@ package it.unibo.dtn.JAL.exceptions;
  * @author Andrea Bisacchi
  *
  */
-public class JALNullPointerException extends JALException {
+public class JALNullPointerException extends RuntimeException {
 
 	private static final long serialVersionUID = 2343869017726215223L;
 

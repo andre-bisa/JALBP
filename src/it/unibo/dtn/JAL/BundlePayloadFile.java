@@ -10,7 +10,6 @@ import java.nio.file.StandardOpenOption;
 
 /** 
  * Payload saved or loaded from File
- * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *

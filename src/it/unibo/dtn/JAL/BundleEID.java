@@ -3,8 +3,7 @@ package it.unibo.dtn.JAL;
 import java.net.URI;
 
 /** 
- * BundleEndpointID
- * <p>Creation date: 10/04/2019</p>
+ * Bundle Endpoint ID. You can choose between two schemes: IPN and DTN.
  * @author Andrea Bisacchi
  * @version 1.0
  *
@@ -12,7 +11,7 @@ import java.net.URI;
 public abstract class BundleEID {
 
 	/**
-	 * None endpoint according to standard. The value will be dtn:none
+	 * None endpoint according to standard. The value will be <b>dtn:none</b>
 	 */
 	public static final BundleEID NoneEndpoint = new BundleEIDDTNScheme("none");
 	
@@ -50,7 +49,7 @@ public abstract class BundleEID {
 	public abstract String getDemuxString();
 	
 	/**
-	 * Factory constructor of DTNEndpointID.
+	 * Factory constructor of EID
 	 * @param str String in IPN or DTN schema
 	 * @return The DTNEndpointID
 	 */
@@ -68,7 +67,7 @@ public abstract class BundleEID {
 	}
 	
 	/**
-	 * Factory constructor of DTNEndpointID
+	 * Factory constructor of EID
 	 * @param uri IPN or DTN URI
 	 * @return The DTNEndpointID
 	 * @throws IllegalArgumentException More information in constructors of {@link BundleEIDIPNScheme} and {@link BundleEIDDTNScheme}
@@ -76,15 +75,12 @@ public abstract class BundleEID {
 	public static BundleEID of(URI uri) throws IllegalArgumentException {
 		if (uri == null)
 			return null;
-		
 		BundleEID result = null;
-		
 		if (uri.getScheme().equals("ipn")) {
 			String firstNumber = uri.toString().substring(4, uri.toString().indexOf("."));
 			String secondNumber = uri.toString().substring(uri.toString().indexOf(".")+1);
 			result = new BundleEIDIPNScheme(Integer.parseInt(firstNumber), Integer.parseInt(secondNumber));
 		} else if (uri.getScheme().equals("dtn")) {
-			System.out.println(uri.toString());
 			String firstPart = uri.toString().substring(4, uri.toString().indexOf("/"));
 			String secondPart = null;
 			try {
@@ -92,7 +88,6 @@ public abstract class BundleEID {
 			} catch (IndexOutOfBoundsException e) {	}
 			result = new BundleEIDDTNScheme(firstPart, secondPart);
 		}
-		
 		return result;
 	}
 

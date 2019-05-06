@@ -3,13 +3,13 @@ package it.unibo.dtn.JAL;
 import java.net.URI;
 
 /** 
- * Endpoint of DTN scheme
- * <p>Creation date: 10/04/2019</p>
+ * Endpoint using DTN scheme.<br>
+ * Example: <b>dtn:host1/program1</b>
  * @author Andrea Bisacchi
  * @version 1.0
  *
  */
-public class BundleEIDDTNScheme extends BundleEID {
+public final class BundleEIDDTNScheme extends BundleEID {
 	private final String localName;
 	private final String demuxString;
 

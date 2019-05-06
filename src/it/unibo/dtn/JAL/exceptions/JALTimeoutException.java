@@ -5,7 +5,7 @@ package it.unibo.dtn.JAL.exceptions;
  * @author Andrea Bisacchi
  *
  */
-public class JALTimeoutException extends JALException {
+public class JALTimeoutException extends JALReceiveException {
 
 	private static final long serialVersionUID = 3461692587016464226L;
 
@@ -22,10 +22,6 @@ public class JALTimeoutException extends JALException {
 
 	public JALTimeoutException(String message, Throwable cause) {
 		super(message, cause);
-	}
-
-	public JALTimeoutException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
 	}
 
 }

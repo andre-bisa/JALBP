@@ -3,7 +3,6 @@ package it.unibo.dtn.JAL;
 /** 
  * Payload Location.<br>
  * Position where the Payload will be stored
- * <p>Creation date: 10/04/2019</p>
  * @author Andrea Bisacchi
  * @version 1.0
  *

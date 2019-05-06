@@ -5,7 +5,7 @@ package it.unibo.dtn.JAL.exceptions;
  * @author Andrea Bisacchi
  *
  */
-public class JALReceiverException extends JALException {
+public class JALReceiverException extends JALSendException {
 
 	private static final long serialVersionUID = -3217931555123026583L;
 
@@ -22,11 +22,6 @@ public class JALReceiverException extends JALException {
 
 	public JALReceiverException(String message, Throwable cause) {
 		super(message, cause);
-	}
-
-	public JALReceiverException(String message, Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
 	}
 
 }

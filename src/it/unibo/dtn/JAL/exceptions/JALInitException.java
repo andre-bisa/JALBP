@@ -5,7 +5,7 @@ package it.unibo.dtn.JAL.exceptions;
  * @author Andrea Bisacchi
  *
  */
-public class JALInitException extends JALException {
+public class JALInitException extends Exception {
 
 	private static final long serialVersionUID = 3716072856487089335L;
 

@@ -3,21 +3,20 @@ package it.unibo.dtn.JAL;
 import java.net.URI;
 
 /** 
- * Endpoint of IPN scheme.<br>
- * Example: ipn:10.3 <br>
- * <p>Creation date: 10/04/2019</p>
+ * Endpoint using IPN scheme.<br>
+ * Example: <b>ipn:10.3</b><br>
  * @author Andrea Bisacchi
  * @version 1.0
  *
  */
-public class BundleEIDIPNScheme extends BundleEID {
+public final class BundleEIDIPNScheme extends BundleEID {
 	private final int localNumber;
 	private final int demuxNumber;
 	
 	/**
 	 * Builds an Endpoint according to IPN schema.<br>
 	 * It follows the schema: ipn:localNumber.demuxNumber<br>
-	 * Example: ipn:10.3 <br>
+	 * Example: ipn:10.3<br>
 	 * @param localNumber Local number
 	 * @param demuxNumber Demux number
 	 * @throws IllegalArgumentException In case the localNumber or demuxNumer are less then 0
