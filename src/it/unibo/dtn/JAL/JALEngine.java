@@ -2,17 +2,18 @@ package it.unibo.dtn.JAL;
 
 import it.unibo.dtn.JAL.exceptions.JALException;
 import it.unibo.dtn.JAL.exceptions.JALInitException;
+import it.unibo.dtn.JAL.exceptions.JALLibraryNotFoundException;
 
 /** 
  * Class used to force some parameters in DTN sockets.<br>
- * You can force the EID schema and the IPN Node in case you are using DTN2 implementation.<br>
+ * You can force the EID scheme and the local IPN Node in case you are using DTN2 implementation and you are forcing IPN scheme.<br>
  * <p>
  * <b>Usage:</b><br>
  * <ol>
  * <li>Call {@link #getInstance()} to get the instance.</li>
  * <li>(Optional) Set the forcing parameters before opening {@link BPSocket}s ({@link #setForceEIDSchema(EngineForceEIDSchema)} and {@link #setIPNNodeForDTN2(int)}).</li>
  * <li>(Optional) Call {@link #init()} function.</li>
- * <li>Call {@link #destroy()} function when all {@link BPSocket}s are closed and you don't want to open anymore.</li>
+ * <li>Call {@link #destroy()} function when all {@link BPSocket}s are unregistered and you are not willing to open anymore.</li>
  * </ol>
  * </p>
  * 
@@ -28,7 +29,7 @@ public class JALEngine {
 	private boolean initialized = false;
 	
 	/**
-	 * Getter of Force EID
+	 * Returns the Force EID scheme
 	 * @return The Force EID
 	 */
 	public EngineForceEIDSchema getForceEID() {
@@ -36,17 +37,20 @@ public class JALEngine {
 	}
 	
 	/**
-	 * Sets the ForceEIDSchema
-	 * @param forceEIDSchema To set
-	 * @return This object (for serial set calls)
+	 * Requires to force the scheme
+	 * @param forceEIDSchema - the scheme to force
+	 * @return This object (for serial settings calls)
+	 * @throws IllegalStateException In case you try to change after the creation of a {@link BPSocket}
 	 */
-	public JALEngine setForceEIDSchema(EngineForceEIDSchema forceEIDSchema) {
+	public JALEngine setForceEIDSchema(EngineForceEIDSchema forceEIDSchema) throws IllegalStateException {
+		if (this.initialized)
+			throw new IllegalStateException();
 		this.forceEID = forceEIDSchema;
 		return this;
 	}
 	
 	/**
-	 * Getter of IPNNodeForDTN2
+	 * Returns the IPNNodeForDTN2
 	 * @return The IPNNodeForDTN2
 	 */
 	public int getIPNNodeForDTN2() {
@@ -54,11 +58,14 @@ public class JALEngine {
 	}
 	
 	/**
-	 * Sets the IPNNodeForDTN2
-	 * @param IPNNodeForDTN2 To set
-	 * @return This object (for serial set calls)
+	 * Sets the local IPN node number. To be used if forcing IPN scheme and using DTN2 implementation.
+	 * @param IPNNodeForDTN2 - local IPN Node number
+	 * @return This object (for serial settings calls)
+	 * @throws IllegalStateException In case you try to change after the creation of a {@link BPSocket}
 	 */
-	public JALEngine setIPNNodeForDTN2(int IPNNodeForDTN2 ) {
+	public JALEngine setIPNNodeForDTN2(int IPNNodeForDTN2) throws IllegalStateException {
+		if (this.initialized)
+			throw new IllegalStateException();
 		this.IPNNodeForDTN2 = IPNNodeForDTN2;
 		return this;
 	}
@@ -104,9 +111,10 @@ public class JALEngine {
 	private static JALEngine instance = null; // Singleton
 	private JALEngine() {}
 	/**
-	 * The ALBPEngine is a singleton object.
-	 * @return The instance of ALBPEngine
-	 * @throws JALException In case of ALBPException.
+	 * Returns the instance of JALEngine.
+	 * @return The instance of JALEngine
+	 * @throws JALLibraryNotFoundException In case the library is not found in the system (probably not installed)
+	 * @throws JALException In case of Exceptions.
 	 * @see JALException
 	 */
 	public static JALEngine getInstance() throws JALException {
@@ -119,15 +127,15 @@ public class JALEngine {
 	}
 	
 	/**
-	 * Loads the al_bp library.
-	 * @throws Throwable In case the library is not installed in the system
+	 * Loads the al_bp library for JNI.
+	 * @throws JALLibraryNotFoundException In case the library is not found in the system (probably not installed)
 	 */
-	private static void loadLibrary() {
+	private static void loadLibrary() throws JALLibraryNotFoundException {
+		final String libraryName = "al_bp";
 		try {
-			System.loadLibrary("al_bp");
+			System.loadLibrary(libraryName);
 		} catch (Throwable e) {
-			System.err.println("Error, library al_bp not found in: " + System.getProperty("java.library.path"));
-			throw e;
+			throw new JALLibraryNotFoundException("Error, library " + libraryName + " not found in: " + System.getProperty("java.library.path"), e);
 		}
 	}
 	

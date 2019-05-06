@@ -6,26 +6,31 @@ import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 /** 
- * DTN Bundle rappresentation
- * <p>Creation date: 10/04/2019</p>
+ * <p>
+ * This class represents a Bundle.
+ * </p>
+ * 
+ * <p>
+ * The bundles are used to implement a connectionless bundle delivery services according to RFC 4838. Multiple bundles sent from one machine to another might be routed differently, and might arrive in any order. Bundle delivery is not guaranteed.
+ * </p>
+ * 
  * @author Andrea Bisacchi
  * @version 1.0
  *
  */
-public class Bundle {
+public final class Bundle {
 
 	// *** BUNDLE ID
-	private Optional<BundleEID> source = Optional.empty();
+	private BundleEID source = null;
 	private BundleTimestamp creationTimestamp = null;
 	private int fragmentOffset = 0;
 	private int origLength = 0;
 	
 	// *** BUNDLE SPEC
-	private Optional<BundleEID> destination = Optional.empty();
-	private Optional<BundleEID> replyTo = Optional.empty();
+	private BundleEID destination = null;
+	private BundleEID replyTo = null;
 	private BundlePriority priority = null;
 	private List<BundleDeliveryOption> deliveryOptions = new LinkedList<>();
 	private int expiration = 0;
@@ -43,8 +48,8 @@ public class Bundle {
 	
 	/**
 	 * Creates a new bundle
-	 * @param destination The destination
-	 * @throws IllegalArgumentException In case of destination==null
+	 * @param destination - the destination endpointID
+	 * @throws IllegalArgumentException In case the destination is null
 	 */
 	public Bundle(BundleEID destination) throws IllegalArgumentException {
 		this();
@@ -55,9 +60,9 @@ public class Bundle {
 	
 	/**
 	 * Creates a new bundle
-	 * @param destination The destination
-	 * @param expiration Expiration in seconds
-	 * @throws IllegalArgumentException In case of destination==null
+	 * @param destination - the destination endpointID
+	 * @param expiration - expiration in seconds
+	 * @throws IllegalArgumentException In case the destination is null
 	 */
 	public Bundle(BundleEID destination, int expiration) throws IllegalArgumentException {
 		this(destination);
@@ -65,7 +70,8 @@ public class Bundle {
 	}
 	
 	/**
-	 * Creates an empty bundle (used in BPSocket.receive()
+	 * Creates an empty bundle (used in {@link BPSocket#receive()})
+	 * @see BPSocket#receive()
 	 */
 	Bundle() {
 		this.deliveryOptions.add(BundleDeliveryOption.None);
@@ -75,7 +81,7 @@ public class Bundle {
 	}
 
 	/**
-	 * Retunrs the status report
+	 * Returns the status report
 	 * @return The status report
 	 */
 	public StatusReport getStatusReport() {
@@ -83,9 +89,9 @@ public class Bundle {
 	}
 	
 	/**
-	 * 
+	 * Returns the data inside the payload or null if there is no payload
 	 * @return The data inside the payload or null if there is no payload
-	 * @see BundlePayload See the method in BundlePayload
+	 * @see BundlePayload#getData()
 	 */
 	public byte[] getData() {
 		if (this.payload == null)
@@ -95,9 +101,9 @@ public class Bundle {
 	}
 	
 	/**
-	 * 
+	 * Returns the input stream of data inside the payload or null if there is no payload
 	 * @return The input stream of data inside the payload or null if there is no payload
-	 * @see BundlePayload See the method in BundlePayload
+	 * @see BundlePayload#getInputStream()
 	 */
 	public InputStream getInputStream() {
 		if (this.payload == null)
@@ -107,9 +113,9 @@ public class Bundle {
 	}
 
 	/**
-	 * 
+	 * Returns the buffered reader of data inside the payload or null if there is no payload
 	 * @return The buffered reader of data inside the payload or null if there is no payload
-	 * @see BundlePayload See the method in BundlePayload
+	 * @see BundlePayload#getBufferedReader()
 	 */
 	public BufferedReader getBufferedReader() {
 		if (this.payload == null)
@@ -119,9 +125,9 @@ public class Bundle {
 	}
 
 	/**
-	 * 
+	 * Returns the input stream reader of data inside the payload or null if there is no payload
 	 * @return The input stream reader of data inside the payload or null if there is no payload
-	 * @see BundlePayload See the method in BundlePayload
+	 * @see BundlePayload#getInputStreamReader()
 	 */
 	public InputStreamReader getInputStreamReader() {
 		if (this.payload == null)
@@ -130,145 +136,287 @@ public class Bundle {
 			return this.payload.getInputStreamReader();
 	}
 	
+	/**
+	 * Returns the source to which this bundle is being sent or from which the bundle was received. For sending, if omitted, will be set {@link BPSocket#getLocalEID()} when calling {@link BPSocket#send(Bundle)} 
+	 * @return The source of the bundle
+	 */
 	public BundleEID getSource() {
-		if (this.source.isPresent())
-			return this.source.get();
-		else
-			return null;
+		return this.source;
 	}
 
+	/**
+	 * Returns the creation timestamp
+	 * @return the creation timestamp
+	 */
 	public BundleTimestamp getCreationTimestamp() {
 		return creationTimestamp;
 	}
 
+	/**
+	 * Returns the fragment offset
+	 * @return the fragment offset
+	 */
 	public int getFragmentOffset() {
 		return fragmentOffset;
 	}
 
+	/**
+	 * Returns the orig lenght
+	 * @return the orig lenght
+	 */
 	public int getOrigLength() {
 		return origLength;
 	}
 
-	public Optional<BundleEID> getDestination() {
+	/**
+	 * Returns the destination to which this bundle is being sent
+	 * @return the destination
+	 */
+	public BundleEID getDestination() {
 		return destination;
 	}
 
-	public Optional<BundleEID> getReplyTo() {
+	/**
+	 * Returns the reply-to destination to which this bundle is being sent
+	 * @return the reply-to destination
+	 */
+	public BundleEID getReplyTo() {
 		return replyTo;
 	}
 
+	/**
+	 * Returns the priority
+	 * @return the priority
+	 */
 	public BundlePriority getPriority() {
 		return priority;
 	}
 
+	/**
+	 * Returns the delivery options. Use the delivery options only for requesting options on sending bundles. 
+	 * @return the delivery options
+	 */
 	public List<BundleDeliveryOption> getDeliveryOptions() {
 		return new LinkedList<>(this.deliveryOptions);
 	}
 
+	/**
+	 * Returns the bundle expiration (in seconds)
+	 * @return the bundle expiration
+	 */
 	public int getExpiration() {
 		return expiration;
 	}
 
+	/**
+	 * Returns the delivery RegID
+	 * @return the delivery RegID
+	 */
 	public int getDeliveryRegID() {
 		return deliveryRegID;
 	}
 
+	/**
+	 * Returns the extension blocks
+	 * @return the extension blocks
+	 */
 	public BundleExtensionBlock[] getBlocks() {
 		return this.blocks.toArray(new BundleExtensionBlock[this.blocks.size()]);
 	}
 
+	/**
+	 * Returns the metadata blocks
+	 * @return the metadata blocks
+	 */
 	public BundleExtensionBlock[] getMetadata() {
 		return this.metadata.toArray(new BundleExtensionBlock[this.metadata.size()]);
 	}
 
+	/**
+	 * Returns if the bundle is or not unreliable
+	 * @return if the bundle is or not unreliable
+	 */
 	public boolean isUnreliable() {
 		return unreliable;
 	}
 
+	/**
+	 * Returns if the bundle is or not critical
+	 * @return if the bundle is or not critical
+	 */
 	public boolean isCritical() {
 		return critical;
 	}
 
+	/**
+	 * Returns the flow label
+	 * @return the flow label
+	 */
 	public int getFlowLabel() {
 		return flowLabel;
 	}
 
+	/**
+	 * Returns the payload
+	 * @return the payload
+	 */
 	public BundlePayload getPayload() {
 		return payload;
 	}
 
+	/**
+	 * Sets the source to which this bundle is being sent or from which the bundle was received. For sending, if omitted, will be set {@link BPSocket#getLocalEID()} when calling {@link BPSocket#send(Bundle)}
+	 * @param source - the source. For sending, if omitted, will be set {@link BPSocket#getLocalEID()} when calling {@link BPSocket#send(Bundle)}
+	 */
 	public void setSource(BundleEID source) {
-		this.source = Optional.of(source);
+		this.source = source;
 	}
 
-	public void setCreationTimestamp(BundleTimestamp creationTimestamp) {
-		this.creationTimestamp = creationTimestamp;
-	}
-
+	/**
+	 * Sets the fragment offset
+	 * @param fragmentOffset - the fragment offset
+	 */
 	public void setFragmentOffset(int fragmentOffset) {
 		this.fragmentOffset = fragmentOffset;
 	}
 
+	/**
+	 * Sets the orig lenght
+	 * @param origLength - the orig lenght
+	 */
 	public void setOrigLength(int origLength) {
 		this.origLength = origLength;
 	}
 
+	/**
+	 * Sets the destination to which this bundle is being sent
+	 * @param destination - the destination
+	 */
 	public void setDestination(BundleEID destination) {
-		this.destination =  Optional.of(destination);
+		this.destination =  destination;
 	}
 
+	/**
+	 * Sets the reply-to destination to which this bundle is being sent
+	 * @param replyTo - the reply-to destination
+	 */
 	public void setReplyTo(BundleEID replyTo) {
-		this.replyTo = Optional.of(replyTo);
+		this.replyTo = replyTo;
 	}
 
+	/**
+	 * Sets the priority
+	 * @param priority - the priority
+	 */
 	public void setPriority(BundlePriority priority) {
 		this.priority = priority;
 	}
 
-	public void setDeliveryOptions(Collection<BundleDeliveryOption> deliveryOptions) {
+	/**
+	 * Sets and changes the current delivery options with the
+	 * @param deliveryOptions - the new delivery options
+	 * @throws NullPointerException if the specified collection is null
+	 */
+	public void setDeliveryOptions(Collection<BundleDeliveryOption> deliveryOptions) throws NullPointerException {
 		this.deliveryOptions = new LinkedList<>(deliveryOptions);
 	}
 	
-	public void addDeliveryOption(BundleDeliveryOption deliveryOption) {
+	/**
+	 * Adds a new delivery option
+	 * @param deliveryOption - the delivery options
+	 * @throws NullPointerException if the delivery option is null
+	 */
+	public void addDeliveryOption(BundleDeliveryOption deliveryOption) throws NullPointerException {
+		if (this.deliveryOptions == null)
+			throw new NullPointerException();
 		this.deliveryOptions.add(deliveryOption);
 	}
 	
-	public boolean removeDeliveryOption(BundleDeliveryOption deliveryOption) {
+	/**
+	 * Removes a delivery option
+	 * @param deliveryOption - the delivery option
+	 * @return If the delivery option was removed or not
+	 * @throws NullPointerException if the delivery option is null
+	 */
+	public boolean removeDeliveryOption(BundleDeliveryOption deliveryOption) throws NullPointerException {
+		if (deliveryOption == null)
+			throw new NullPointerException();
 		return this.deliveryOptions.remove(deliveryOption);
 	}
 	
+	/**
+	 * Clears all the delivery options
+	 */
 	public void clearAllDeliveryOption() {
 		this.deliveryOptions.clear();
 	}
 
+	/**
+	 * Sets the expiration (in seconds)
+	 * @param expiration - the expiration
+	 */
 	public void setExpiration(int expiration) {
 		this.expiration = expiration;
 	}
 
+	/**
+	 * Sets the delivery RegID
+	 * @param deliveryRegID - the delivery RegID
+	 */
 	public void setDeliveryRegID(int deliveryRegID) {
 		this.deliveryRegID = deliveryRegID;
 	}
 
-	public void addBlock(BundleExtensionBlock block) {
+	/**
+	 * Adds a new extension block
+	 * @param block - the block
+	 * @throws NullPointerException if the block is null
+	 */
+	public void addBlock(BundleExtensionBlock block) throws NullPointerException {
+		if (block == null)
+			throw new NullPointerException();
 		this.blocks.add(block);
 	}
 
-	public void addMetadata(BundleExtensionBlock metadata) {
+	/**
+	 * Adds a new metadata block
+	 * @param metadata - the metadata block
+	 * @throws NullPointerException if metadaa is null
+	 */
+	public void addMetadata(BundleExtensionBlock metadata) throws NullPointerException {
+		if (metadata == null)
+			throw new NullPointerException();
 		this.metadata.add(metadata);
 	}
 
+	/**
+	 * Sets the unreliable option
+	 * @param unreliable - the unreliable
+	 */
 	public void setUnreliable(boolean unreliable) {
 		this.unreliable = unreliable;
 	}
 
+	/**
+	 * Sets the critical option
+	 * @param critical - the critical
+	 */
 	public void setCritical(boolean critical) {
 		this.critical = critical;
 	}
 
+	/**
+	 * Sets the flow label
+	 * @param flowLabel - the flow label
+	 */
 	public void setFlowLabel(int flowLabel) {
 		this.flowLabel = flowLabel;
 	}
 
+	/**
+	 * Sets the bundle payload
+	 * @param payload - the payload
+	 */
 	public void setPayload(BundlePayload payload) {
 		this.payload = payload;
 	}
@@ -353,7 +501,7 @@ public class Bundle {
 	
 	@SuppressWarnings("unused")
 	private void setCreationTimestamp(int seconds, int sequenceNumber) {
-		this.setCreationTimestamp(new BundleTimestamp(seconds, sequenceNumber));
+		this.creationTimestamp = new BundleTimestamp(seconds, sequenceNumber);
 	}
 	
 	@SuppressWarnings("unused")
@@ -465,7 +613,7 @@ public class Bundle {
 	
 	@SuppressWarnings("unused")
 	private String getSourceAsString() {
-		return this.source.get().toString();
+		return (this.source != null ? this.source.getDemuxString() : "");
 	}
 	
 	@SuppressWarnings("unused")
@@ -480,20 +628,12 @@ public class Bundle {
 	
 	@SuppressWarnings("unused")
 	private String getDestinationAsString() {
-		Optional<BundleEID> EID = this.getDestination();
-		if (EID.isPresent())
-			return EID.get().toString();
-		else
-			return "";
+		return (this.destination != null ? this.destination.getDemuxString() : "");
 	}
 	
 	@SuppressWarnings("unused")
 	private String getReplyToAsString() {
-		Optional<BundleEID> EID = this.getReplyTo();
-		if (EID.isPresent())
-			return EID.get().toString();
-		else
-			return "";
+		return (this.replyTo != null ? this.replyTo.getDemuxString() : "");
 	}
 	
 	@SuppressWarnings("unused")
