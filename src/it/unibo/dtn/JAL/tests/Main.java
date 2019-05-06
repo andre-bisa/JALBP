@@ -32,7 +32,7 @@ class Main {
 			Bundle b = new Bundle(bundle.getSource());
 			BundlePayload payload = BundlePayload.of("1234".getBytes());
 			b.setPayload(payload);
-			b.setReplyTo(BundleEID.of("ipn:5.10"));
+			b.setReplyTo(BundleEID.of(socket.getLocalEID()));
 			b.addDeliveryOption(BundleDeliveryOption.Custody);
 			b.addDeliveryOption(BundleDeliveryOption.CustodyReceipt);
 			b.addDeliveryOption(BundleDeliveryOption.DeliveryReceipt);

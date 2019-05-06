@@ -613,7 +613,7 @@ public final class Bundle {
 	
 	@SuppressWarnings("unused")
 	private String getSourceAsString() {
-		return (this.source != null ? this.source.getDemuxString() : "");
+		return (this.source != null ? this.source.getEndpointID() : "");
 	}
 	
 	@SuppressWarnings("unused")
@@ -628,12 +628,12 @@ public final class Bundle {
 	
 	@SuppressWarnings("unused")
 	private String getDestinationAsString() {
-		return (this.destination != null ? this.destination.getDemuxString() : "");
+		return (this.destination != null ? this.destination.getEndpointID() : "");
 	}
 	
 	@SuppressWarnings("unused")
 	private String getReplyToAsString() {
-		return (this.replyTo != null ? this.replyTo.getDemuxString() : "");
+		return (this.replyTo != null ? this.replyTo.getEndpointID() : "");
 	}
 	
 	@SuppressWarnings("unused")
