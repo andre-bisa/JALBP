@@ -19,7 +19,7 @@ import it.unibo.dtn.JAL.exceptions.JALUnregisterException;
  * <b>Usage:</b><br>
  * <ol>
  * <li>Call {@link #getInstance()} to get the instance.</li>
- * <li>(Optional) Set the forcing parameters before opening {@link BPSocket}s ({@link #setForceEIDscheme(EngineForceEIDscheme)} and {@link #setIPNNodeForDTN2(int)}).</li>
+ * <li>(Optional) Set the forcing parameters before opening {@link BPSocket}s ({@link #setForceEIDScheme(EngineForceEIDScheme)} and {@link #setIPNNodeForDTN2(int)}).</li>
  * <li>(Optional) Call {@link #init()} function.</li>
  * <li>Call {@link #destroy()} function when all {@link BPSocket}s are unregistered and you are not willing to open anymore.</li>
  * </ol>
@@ -80,7 +80,7 @@ public class JALEngine {
 	
 	/**
 	 * <b>Important function.</b><br>
-	 * Before calling this function, if you need to, you have to call {@link #setForceEIDscheme(EngineForceEIDscheme)} and {@link #setIPNNodeForDTN2(int)}.<br>
+	 * Before calling this function, if you need to, you have to call {@link #setForceEIDScheme(EngineForceEIDScheme)} and {@link #setIPNNodeForDTN2(int)}.<br>
 	 * This function have to be called once before using {@link BPSocket}.<br>
 	 * In case you will not call {@link #init()} the {@link BPSocket} will do it for you.
 	 * @throws JALNoImplementationFoundException - in case no DTN implementations were found in the current system
