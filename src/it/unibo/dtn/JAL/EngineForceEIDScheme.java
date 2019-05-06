@@ -2,7 +2,7 @@ package it.unibo.dtn.JAL;
 
 /** 
  * <p>
- * Possible schemas used in {@link JALEngine#setForceEIDScheme(EngineForceEIDScheme)}.
+ * Possible schemes used in {@link JALEngine#setForceEIDScheme(EngineForceEIDScheme)}.
  * </p>
  * @author Andrea Bisacchi
  * @version 1.0
