@@ -3,7 +3,6 @@ package it.unibo.dtn.JAL.exceptions;
 import java.io.IOException;
 
 /** Receive Exception
- * Creation date: 10/04/2019
  * @author Andrea Bisacchi
  *
  */

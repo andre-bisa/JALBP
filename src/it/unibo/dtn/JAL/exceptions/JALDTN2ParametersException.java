@@ -1,7 +1,7 @@
 package it.unibo.dtn.JAL.exceptions;
 
-/** DTN2 Parameters Exception
- * Creation date: 10/04/2019
+/**
+ * DTN2 Parameters Exception
  * @author Andrea Bisacchi
  *
  */

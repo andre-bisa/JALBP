@@ -1,7 +1,7 @@
 package it.unibo.dtn.JAL.exceptions;
 
-/** Init Exception
- * Creation date: 10/04/2019
+/** 
+ * Init Exception
  * @author Andrea Bisacchi
  *
  */

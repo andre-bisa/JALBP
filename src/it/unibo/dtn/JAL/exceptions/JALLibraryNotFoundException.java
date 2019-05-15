@@ -4,8 +4,8 @@
 package it.unibo.dtn.JAL.exceptions;
 
 /**
+ * Exception generated if the JAL library is not installed properly.
  * @author Andrea Bisacchi
- *
  */
 public class JALLibraryNotFoundException extends RuntimeException {
 

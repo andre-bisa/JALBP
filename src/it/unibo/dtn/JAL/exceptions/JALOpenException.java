@@ -1,7 +1,6 @@
 package it.unibo.dtn.JAL.exceptions;
 
 /** Open Exception
- * Creation date: 10/04/2019
  * @author Andrea Bisacchi
  *
  */
