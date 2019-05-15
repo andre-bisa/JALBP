@@ -6,6 +6,7 @@
     <property name="src" location="src" />
     <property name="build" location="build" />
     <property name="dist" location="dist" />
+	<property name="doc" location="docs" />
     <property name="version" value="1.0" />
  
     <target name="init">
@@ -19,13 +20,16 @@
         <!-- Compile the java code from ${src} into ${build} -->
         <javac srcdir="${src}" destdir="${build}" />
     </target>
+	
+	<target name="javadoc" depends="compile" description="generate the javadoc">
+        <javadoc access="public" author="true" sourcepath="${src}" destdir="${doc}" doctitle="JALBP" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="it.unibo.dtn.JAL,it.unibo.dtn.JAL.exceptions" source="1.8" splitindex="true" use="true" version="true" />
+    </target>
  
-    <target name="dist" depends="compile" description="generate the distribution">
-        <buildnumber />
+    <target name="dist" depends="javadoc" description="generate the distribution">
         <!-- Create the distribution directory -->
         <mkdir dir="${dist}/lib" />
  
-        <jar destfile="${dist}/lib/JAL-${version}.${build.number}.jar" basedir="${build}" />
+        <jar destfile="${dist}/lib/JAL-${version}.jar" basedir="${build}" />
     </target>
  
     <target name="clean" description="clean up">
