@@ -1,6 +1,6 @@
-﻿JAL Library
+﻿# JAL Library
 The Java Abstraction Layer (JAL) library is the Java wrapping of Abstraction Layer Bundle Protocol (ALBP). JAL library uses JNI methods to use the ALBP library written in C. It allows users to use Bundle Protocol sockets on Java programs without caring about DTN implementation running on the machine. According to ALBP library, the supported DTN implementations are DTN2, ION and IBR-DTN.
-# Requirements
+## Requirements
 To install JAL library you need:
 -   Java JDK 1.7 or superior.
     
@@ -11,9 +11,9 @@ To install JAL library you need:
 -   Linux based system (because of compatibility of ALBP library).
     
 -   At least one of the DTN implementations supported by ALBP library (ION, DTN2 and IBR-DTN).
-# Installation
+## Installation
 The installation of JAL is pretty easy, it just needs 3 steps:
-## 1. Download and compile ALBP library
+### 1. Download and compile ALBP library
 The first step is to download and compile the ALBP library. To perform this operation you should run the make command in a terminal. The make command requires some parameters to let it know which implementations you want the ALBP library work with. You can run the following commands to get the help message.
 ```bash
 $ cd <ALBP_folder>  
@@ -24,7 +24,7 @@ Here is an example of compiling properly the library for working only with ION i
 $ cd <ALBP_folder>
 $ make ION_DIR=<ION_folder>
 ```
-## 2. Download and install JAL library
+### 2. Download and install JAL library
 Once the ALBP library is compiled you need to download, compile and install the JAL library. Once downloaded and unzipped the library, you should proceed to compile and install the C module for the JNI calls; you can perform it by running the following commands in a terminal.
 ```bash
 $ cd <JAL_folder>  
@@ -37,9 +37,9 @@ Now the al_bp library is correctly installed and ready to be used from the JAL l
 $ ant
 ```
 that will compile the library and will prepare the javadoc and the .jar file that will be saved in /dist/lib/JAL_<version>.jar, where <version> will be the current version.
-## 3. Import and use the library
+### 3. Import and use the library
 Once created the .jar file you can import it in your project and use it. After including the .jar file you can specify to your IDE the internal folder “doc” which contains the javadoc documentation.
-# How to use the JAL library
+## How to use the JAL library
 To use the JAL library you have to perform some steps.
 1.  Configure the JALEngine to force one of the two schemes required by the standard (IPN and DTN); in case you are forcing IPN scheme you must set also the IPNSchemeForDTN2 because DTN2 working with IPN scheme doesn’t know which is its local number. It’s important to remember that this operation is optional and the configuration is for an advanced use of the JAL library, for normal users the default is the preferred choice.
 2.  Initialize the JALEngine by calling the init method. Also this operation is optional because when registering a BPSocket the JALEngine will be automatically initialized, allowing users not to worry about that.
@@ -50,9 +50,9 @@ To use the JAL library you have to perform some steps.
 7.  Destroy the JALEngine. This operation must be called when you don’t want to use BPSockets anymore and serves to deallocate properly the data from the C structures. It is automatically called when the library for JNI calls is unloaded from the JVM, that time usually coincides with the ending of the program therefore is required that your application destroys on his own the JALEngine when no more BPSockets will be created.
 [![](https://lh4.googleusercontent.com/C9zANkZoLKXuH13ZqUofG6Nwnt50MLqzu_StwhhKlqriMMytCDkFEjCsqX3I3qxS5aj7de3qhhgfyTz4m0SSnKa6sf2WwUoOZjq5uRD6C9uVVgwr2SmYEsjX84VPoj-i7Ok3FE6O)
 Here a flow diagram of the steps that a user have to follow to use the JAL library.
-# Usage examples
+## Usage examples
 Some simple examples follow to send and receive bundles and then a simple complete program that sends and receives bundles.
-## Send bundle
+### Send bundle
 The following code shows how to send a bundle to ipn:1.4 with replyTo set to dtn:machine2/replyTo and custody request. It registers to the DTN socket with demux token as 8 in case of IPN scheme or “sending” in case of DTN scheme.
 ```java
 BPSocket socket = null;
@@ -90,7 +90,7 @@ try {
 	System.exit(1);
 }
 ```
-## Receive bundle
+### Receive bundle
 To receive a bundle from a DTN socket you need to call the receive function as in the following example. It registers to the DTN socket with demux token as 9 in case of IPN scheme or “receiving” in case of DTN scheme.
 ```java
 
@@ -131,7 +131,7 @@ try {
 	System.exit(1);
 }
 ```
-## A simple complete program
+### A simple complete program
 Now that we know how to send and receive a bundle we can write a simple complete program that will receive a bundle sending the same data received from the source. It registers to the DTN socket with demux token as 10 in case of IPN scheme or “echo” in case of DTN scheme.
 ```java
 BPSocket socket = null;
@@ -183,7 +183,7 @@ try {
 	System.exit(1);
 }
 ```
-# Uninstall
+## Uninstall
 
 To uninstall the JAL library you need to run the commands below.
 ```bash
