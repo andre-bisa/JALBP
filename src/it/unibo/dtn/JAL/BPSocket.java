@@ -55,7 +55,6 @@ import it.unibo.dtn.JAL.exceptions.JALUnregisterException;
  */
 public class BPSocket implements Closeable, AutoCloseable {
 	private int registrationDescriptor = -1;
-	private boolean registered = false;
 	
 	private int timeout = 60;
 	private BundlePayloadLocation payloadLocation = BundlePayloadLocation.Memory;
@@ -145,10 +144,8 @@ public class BPSocket implements Closeable, AutoCloseable {
 			ExceptionManager.checkError(result);
 		} catch (JALSendException | JALReceiveException | JALNullPointerException | JALInitException
 				| JALRegisterException | JALGeneralException e) {
-			this.registered = false;
 			throw new JALUnregisterException(e);
 		}
-		this.registered = false;
 	}
 	
 	/**
@@ -334,7 +331,6 @@ public class BPSocket implements Closeable, AutoCloseable {
 				| JALUnregisterException | JALNotRegisteredException | JALGeneralException e) {
 			throw new JALRegisterException(e);
 		}
-		result.registered = true;
 		return result;
 	}
 	
