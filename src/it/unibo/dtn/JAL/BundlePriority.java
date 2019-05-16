@@ -6,7 +6,7 @@ package it.unibo.dtn.JAL;
  * @version 1.0
  *
  */
-public class BundlePriority {
+public final class BundlePriority {
 	private int priority;
 	private int ordinal;
 	

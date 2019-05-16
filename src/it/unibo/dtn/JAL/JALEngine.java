@@ -29,7 +29,7 @@ import it.unibo.dtn.JAL.exceptions.JALUnregisterException;
  * @version 1.0
  *
  */
-public class JALEngine {
+public final class JALEngine {
 	private EngineForceEIDScheme forceEID = EngineForceEIDScheme.NOFORCE;
 	private int IPNNodeForDTN2 = 0;
 	

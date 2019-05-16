@@ -9,7 +9,7 @@ import java.util.List;
  * @version 1.0
  *
  */
-public class StatusReport {
+public final class StatusReport {
 	private final Bundle bundle;
 	
 	private BundleEID source;
