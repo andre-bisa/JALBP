@@ -145,6 +145,7 @@ public class BPSocket implements Closeable, AutoCloseable {
 			ExceptionManager.checkError(result);
 		} catch (JALSendException | JALReceiveException | JALNullPointerException | JALInitException
 				| JALRegisterException | JALGeneralException e) {
+			this.registered = false;
 			throw new JALUnregisterException(e);
 		}
 		this.registered = false;
