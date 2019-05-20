@@ -7,9 +7,9 @@ pages:
   script:
   - apt-get update -y && apt-get install -y ant openjdk-8-jdk
   - ant
-  - mkdir ./public/lib
+  - mkdir -p ./public/lib
   - cp dist/lib/*.jar ./public/lib
-  - mkdir ./public/javadoc
+  - mkdir -p ./public/javadoc
   - cd javadoc/doc
   - cp -r * ../../public/javadoc
   artifacts:
