@@ -10,11 +10,13 @@ pages:
   - mkdir -p ./public/lib
   - cp dist/lib/*.jar ./public/lib
   - mkdir -p ./public/javadoc
+  - echo "<html><head><title>JAL index</title></head><body><h1>JAL index</h1><p><ul><li><a href='./javadoc/'>Javadoc</a></li></ul></p><p>Versions:<br/><ul>" > ./public/index.html
+  - for lib in ./public/lib/*.jar; do echo "<li><a href='$lib'>$(basename $lib)</a></li>" >> ./public/index.html; done
+  - echo "</ul></p></body></html>" >> ./public/index.html
   - cd javadoc/doc
   - cp -r * ../../public/javadoc
   artifacts:
     paths:
     - public
-    - dist
   only:
   - master
