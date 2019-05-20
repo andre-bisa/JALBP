@@ -1,16 +1,14 @@
-﻿# JAL Library
+# JAL Library
 The Java Abstraction Layer (JAL) library is the Java wrapping of Abstraction Layer Bundle Protocol (ALBP). JAL library uses JNI methods to use the ALBP library written in C. It allows users to use Bundle Protocol sockets on Java programs without caring about DTN implementation running on the machine. According to ALBP library, the supported DTN implementations are DTN2, ION and IBR-DTN.
 ## Requirements
 To install JAL library you need:
 -   Java JDK 1.7 or superior.
-    
 -   Ant.
-    
 -   ALBP library.
-    
 -   Linux based system (because of compatibility of ALBP library).
-    
 -   At least one of the DTN implementations supported by ALBP library (ION, DTN2 and IBR-DTN).
+## Usage
+To use this library you can visit [this](https://dtnsuite.gitlab.io/JALBP/) to see all the library versions, you can also see the [javadoc](https://dtnsuite.gitlab.io/JALBP/javadoc/).
 ## Installation
 The installation of JAL is pretty easy, it just needs 3 steps:
 ### 1. Download and compile ALBP library
