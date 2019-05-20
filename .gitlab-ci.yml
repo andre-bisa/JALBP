@@ -1,0 +1,22 @@
+# This file is a template, and might need editing before it works on your project.
+# Full project: https://gitlab.com/pages/doxygen
+image: debian
+
+pages:
+  stage: deploy
+  script:
+  - apt-get update -y && apt-get install -y ant openjdk-8-jdk
+  - ant
+  - mkdir -p ./public/lib
+  - cp dist/lib/*.jar ./public/lib
+  - mkdir -p ./public/javadoc
+  - echo "<html><head><title>JAL index</title></head><body><h1>JAL index</h1><p><ul><li><a href='./javadoc/'>Javadoc</a></li></ul></p><p>Versions:<br/><ul>" > ./public/index.html
+  - for lib in ./public/lib/*.jar; do echo "<li><a href='./lib/$(basename $lib)'>$(basename $lib)</a></li>" >> ./public/index.html; done
+  - echo "</ul></p></body></html>" >> ./public/index.html
+  - cd javadoc/doc
+  - cp -r * ../../public/javadoc
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
