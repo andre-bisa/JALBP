@@ -7,7 +7,7 @@ To install JAL library you need:
 -   ALBP library.
 -   Linux based system (because of compatibility of ALBP library).
 -   At least one of the DTN implementations supported by ALBP library (ION, DTN2 and IBR-DTN).
-## Usage
+## Download and javadoc
 To use this library you can visit [this](https://dtnsuite.gitlab.io/JALBP/) to see all the library versions, you can also see the [javadoc](https://dtnsuite.gitlab.io/JALBP/javadoc/).
 ## Installation
 The installation of JAL is pretty easy, it just needs 3 steps:
