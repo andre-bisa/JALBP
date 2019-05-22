@@ -51,10 +51,10 @@ Then compile the downloaded library.
     ```bash
     $ make DTN2_DIR=<dtn2_dir> ION_DIR=<ion_dir> IBRDTN_DIR=<ibrdtn_dir>
     ```
-- To install the ALBP library
-    ```bash
-    $ sudo make install
-    ```
+Then install the ALBP library
+```bash
+$ sudo make install
+```
 ### 2. Download and installation JAL library
 Download and installation of JAL library
 ```bash
