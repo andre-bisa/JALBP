@@ -7,36 +7,64 @@ To install JAL library you need:
 -   ALBP library.
 -   Linux based system (because of compatibility of ALBP library).
 -   At least one of the DTN implementations supported by ALBP library (ION, DTN2 and IBR-DTN).
-## Download and javadoc
-To use this library you can visit [this](https://dtnsuite.gitlab.io/JALBP/) to see all the library versions, you can also see the [javadoc](https://dtnsuite.gitlab.io/JALBP/javadoc/).
+
+## Download
+To download the compiled library visit [this](https://dtnsuite.gitlab.io/JALBP/) and choose the version you want to use.  
+See the [section](#installationALBP) to set up the ALBP library.  
+After that you can import the jar file in your project.
+## Documentation/Javadoc
+The documentation is located at the following link: [javadoc](https://dtnsuite.gitlab.io/JALBP/javadoc/).
 ## Installation
 The installation of JAL is pretty easy, it just needs 3 steps:
-### 1. Download and compile ALBP library
-The first step is to download and compile the ALBP library. To perform this operation you should run the make command in a terminal. The make command requires some parameters to let it know which implementations you want the ALBP library work with. You can run the following commands to get the help message.
+### <a name="installationALBP"></a>1. Download and installation ALBP library
+The first step is to download the ALBP library.
 ```bash
-$ cd <ALBP_folder>  
-$ make
+$ git clone https://gitlab.com/dtnsuite/al_bp
+$ cd al_bp
 ```
-Here is an example of compiling properly the library for working only with ION implementation.
+Then compile the downloaded library.
+- To compile only for DTN2 implementation
+    ```bash
+    $ make DTN2_DIR=<dtn2_dir>
+    ```
+- To compile only for ION implementation
+    ```bash
+    $ make ION_DIR=<ion_dir>
+    ```
+- To compile only for IBR-DTN implementation
+    ```bash
+    $ make IBRDTN_DIR=<ibrdtn_dir>
+    ```
+- To compile for DTN2 and ION implementations
+    ```bash
+    $ make DTN2_DIR=<dtn2_dir> ION_DIR=<ion_dir>
+    ```
+- To compile for DTN2 and IBR-DTN implementations
+    ```bash
+    $ make DTN2_DIR=<dtn2_dir> IBRDTN_DIR=<ibrdtn_dir>
+    ```
+- To compile for ION and IBR-DTN implementations
+    ```bash
+    $ make ION_DIR=<ion_dir> IBRDTN_DIR=<ibrdtn_dir>
+    ```
+- To compile for ION, IBR-DTN and DTN2 implementations
+    ```bash
+    $ make DTN2_DIR=<dtn2_dir> ION_DIR=<ion_dir> IBRDTN_DIR=<ibrdtn_dir>
+    ```
+Then install the ALBP library
 ```bash
-$ cd <ALBP_folder>
-$ make ION_DIR=<ION_folder>
-```
-### 2. Download and install JAL library
-Once the ALBP library is compiled you need to download, compile and install the JAL library. Once downloaded and unzipped the library, you should proceed to compile and install the C module for the JNI calls; you can perform it by running the following commands in a terminal.
-```bash
-$ cd <JAL_folder>  
-$ make ION_DIR=<ION_folder> AL_BP_DIR=<ALBP_folder>  
 $ sudo make install
 ```
-Note that <ALBP_folder> must be the absolute path and should be the same as the previous command because the JAL library must use the ALBP library to work!
-Now the al_bp library is correctly installed and ready to be used from the JAL library. To build the JAL library is necessary to run the command
+### 2. Download and installation JAL library
+Download and installation of JAL library
 ```bash
+$ git clone https://gitlab.com/dtnsuite/JALBP
+$ cd JALBP
 $ ant
 ```
-that will compile the library and will prepare the javadoc and the .jar file that will be saved in /dist/lib/JAL_<version>.jar, where <version> will be the current version.
+The jar file will be created in `./dist/lib/`.
 ### 3. Import and use the library
-Once created the .jar file you can import it in your project and use it. After including the .jar file you can specify to your IDE the internal folder “doc” which contains the javadoc documentation.
+Once created the jar file you can import it in your project and use it. After including the jar file you can specify to your IDE the internal folder “doc” which contains the javadoc documentation.
 ## How to use the JAL library
 To use the JAL library you have to perform some steps.
 1.  Configure the JALEngine to force one of the two schemes required by the standard (IPN and DTN); in case you are forcing IPN scheme you must set also the IPNSchemeForDTN2 because DTN2 working with IPN scheme doesn’t know which is its local number. It’s important to remember that this operation is optional and the configuration is for an advanced use of the JAL library, for normal users the default is the preferred choice.
